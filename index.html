@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,323 +8,399 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+
   <style>
+    /* CSS Variables for Theming */
+    :root {
+      --bg-color: #0d0d0d;
+      /* Dark mode background */
+      --text-color: #e0e0e0;
+      --text-secondary: #b0b0b0;
+      --accent-color: #64b5f6;
+      --nav-bg: #181818;
+      --odd-section-bg: #0d0d0d;
+      --even-section-bg: #151515;
+      --card-bg: #1a1a1a;
+      --skill-bubble-bg: #0D47A1;
+      /* Deeper blue for skills bubbles in dark mode */
+      --shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Light theme overrides */
+    body.light-theme {
+      --bg-color: #f5f5f5;
+      --text-color: #333333;
+      --text-secondary: #555555;
+      --accent-color: #007BFF;
+      --nav-bg: #ffffff;
+      --odd-section-bg: #ffffff;
+      --even-section-bg: #f0f0f0;
+      --card-bg: #ffffff;
+      --skill-bubble-bg: #90CAF9;
+      --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
     /* Reset & Global Styles */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-    html {
-      scroll-behavior: smooth;
-    }
+
+    html,
     body {
+      height: 100%;
+      /* Removed overflow: hidden so that content isn’t cut off */
       font-family: 'Poppins', sans-serif;
-      background: #f0f2f5;
-      color: #333;
-      line-height: 1.6;
+      background: var(--bg-color);
+      color: var(--text-color);
     }
+
+    /* Full-page sections with fade transition */
+    section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      transition: opacity 0.7s ease-in-out, background-color 0.7s ease-in-out;
+      scroll-margin-top: 70px;
+    }
+
+    section.visible {
+      opacity: 1;
+    }
+
+    section:nth-of-type(odd) {
+      background: var(--odd-section-bg);
+    }
+
+    section:nth-of-type(even) {
+      background: var(--even-section-bg);
+    }
+
     a {
       text-decoration: none;
       color: inherit;
+      transition: color 0.3s;
     }
+
+    a:hover {
+      color: var(--accent-color);
+    }
+
     /* Navigation */
     nav {
       position: fixed;
       top: 0;
       width: 100%;
-      background: #fff;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      background: var(--nav-bg);
       z-index: 100;
+      box-shadow: var(--shadow);
     }
+
     .container {
       width: 90%;
       max-width: 1200px;
       margin: auto;
-    }
-    .nav-container {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 1rem 0;
     }
+
     .nav-logo {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       font-weight: 600;
-      color: #007bff;
+      color: var(--accent-color);
     }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+    }
+
     .nav-links {
       list-style: none;
       display: flex;
     }
+
     .nav-links li {
       margin-left: 1.5rem;
     }
-    .nav-links a {
-      font-weight: 500;
-      transition: color 0.3s;
+
+    .nav-links a.active {
+      border-bottom: 2px solid var(--accent-color);
+      color: var(--accent-color);
     }
-    .nav-links a:hover {
-      color: #007bff;
+
+    /* Theme Toggle Button */
+    #theme-toggle {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 1.5rem;
+      margin-left: 1.5rem;
+      color: var(--text-color);
     }
+
     .menu-toggle {
       display: none;
       cursor: pointer;
       font-size: 1.5rem;
+      color: var(--text-color);
+      margin-left: 1.5rem;
     }
-    /* Hero Section */
-    header {
-      height: 100vh;
-      background: linear-gradient(135deg, #007bff, #00d4ff);
-      color: #fff;
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .nav-active {
+        display: block;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 200px;
+        background: var(--nav-bg);
+      }
+
+      .nav-active li {
+        padding: 1rem;
+        border-bottom: 1px solid #333;
+      }
+    }
+
+    /* Integrated Home Section with Three Subsections */
+    #home {
+      padding: 2rem;
+      padding-top: 80px;
+      /* Ensures content starts below the nav bar */
       display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .home-container {
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    .home-welcome,
+    .home-about,
+    .home-connect {
+      margin-bottom: 2rem;
+    }
+
+    /* Welcome Subsection */
+    .home-welcome h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      text-shadow: var(--shadow);
+    }
+
+    .home-welcome p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    /* About Me Subsection */
+    .home-about .about-content {
+      display: flex;
+      flex-direction: row;
       align-items: center;
       justify-content: center;
-      text-align: center;
-      padding: 0 1rem;
-    }
-    header .hero-content {
-      animation: fadeInUp 1.5s ease-in-out;
-    }
-    header h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-    }
-    header p {
-      font-size: 1.25rem;
-      margin-bottom: 2rem;
-    }
-    .btn {
-      display: inline-block;
-      padding: 0.75rem 1.5rem;
-      background: #fff;
-      color: #007bff;
-      border-radius: 50px;
-      font-weight: 600;
-      transition: background 0.3s;
-    }
-    .btn:hover {
-      background: #e0e0e0;
-    }
-    /* Section Styling */
-    section {
-      padding: 4rem 0;
-    }
-    .section-title {
-      text-align: center;
-      margin-bottom: 2rem;
-      font-size: 2.25rem;
-      position: relative;
-      display: inline-block;
-    }
-    .section-title::after {
-      content: '';
-      width: 50%;
-      height: 3px;
-      background: #007bff;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: -10px;
-    }
-    .content {
-      width: 90%;
-      max-width: 1000px;
-      margin: auto;
-    }
-    /* About Section */
-    #about {
-      display: flex;
+      gap: 2rem;
       flex-wrap: wrap;
-      align-items: center;
     }
-    #about .about-img,
-    #about .about-text {
+
+    .home-about .about-text {
       flex: 1;
       min-width: 300px;
-      padding: 1rem;
+      text-align: left;
     }
-    #about .about-img img {
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+    .home-about .about-text h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      text-shadow: var(--shadow);
     }
+
+    .home-about .about-text p {
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+
+    .home-about .about-img {
+      flex: 1;
+      min-width: 300px;
+      text-align: center;
+    }
+
+    .home-about .about-img img {
+      border-radius: 8px;
+      max-width: 250px;
+      /* Smaller profile picture */
+      width: 100%;
+      box-shadow: var(--shadow);
+    }
+
+    /* Connect with Me Subsection */
+    .home-connect h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      text-shadow: var(--shadow);
+    }
+
+    .home-connect p {
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .home-connect a {
+      color: var(--accent-color);
+    }
+
     /* Skills Section */
     #skills ul {
       list-style: none;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
+      max-width: 800px;
+      margin: 0 auto;
     }
+
     #skills li {
-      background: #007bff;
+      background: var(--skill-bubble-bg);
       color: #fff;
-      margin: 0.5rem;
+      margin: 0.3rem;
       padding: 0.5rem 1rem;
       border-radius: 20px;
       font-weight: 500;
+      box-shadow: var(--shadow);
     }
-    /* Cards for Experience, Projects, Awards */
+
+    /* Card Layout for Experience/Projects/Awards */
     .card-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 1rem;
+      max-width: 1000px;
+      width: 90%;
+      margin: auto;
+      max-height: calc(100vh - 150px);
+      overflow-y: auto;
+      padding: 1rem;
+      padding-bottom: 2rem;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
+
+    .card-container::-webkit-scrollbar {
+      display: none;
+    }
+
     .card {
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-      padding: 1.5rem;
-      transition: transform 0.3s;
+      background: var(--card-bg);
+      border-radius: 8px;
+      padding: 1rem;
+      box-shadow: var(--shadow);
     }
-    .card:hover {
-      transform: translateY(-5px);
-    }
+
     .card h3 {
       margin-bottom: 0.5rem;
-      color: #007bff;
+      color: var(--accent-color);
     }
+
     .card p {
       margin-bottom: 0.5rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
     }
-    .card a {
-      font-weight: 600;
-      color: #007bff;
-    }
-    /* Contact Section */
-    #contact form {
-      max-width: 600px;
-      margin: auto;
-    }
-    #contact label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-    }
-    #contact input,
-    #contact textarea {
-      width: 100%;
-      padding: 0.75rem;
-      margin-bottom: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    #contact button {
-      display: inline-block;
-      padding: 0.75rem 1.5rem;
-      background: #007bff;
-      border: none;
-      color: #fff;
-      border-radius: 50px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    #contact button:hover {
-      background: #0056b3;
-    }
+
     /* Footer */
     footer {
-      background: #333;
-      color: #fff;
+      background: var(--nav-bg);
+      color: var(--text-secondary);
       text-align: center;
-      padding: 1.5rem 0;
-    }
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      header h1 {
-        font-size: 2.5rem;
-      }
-      .nav-links {
-        display: none;
-      }
-      .menu-toggle {
-        display: block;
-      }
-      .nav-active {
-        display: block;
-        background: #fff;
-        position: absolute;
-        top: 60px;
-        right: 0;
-        width: 200px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      }
-      .nav-active li {
-        padding: 1rem;
-        border-bottom: 1px solid #eee;
-      }
-    }
-    /* Animations */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      padding: 1rem 0;
+      font-size: 0.9rem;
+      box-shadow: var(--shadow);
     }
   </style>
 </head>
+
 <body>
   <!-- Navigation -->
   <nav>
-    <div class="container nav-container">
+    <div class="container">
       <div class="nav-logo">Athmane Benarous</div>
-      <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#awards">Awards</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+      <div class="nav-right">
+        <ul class="nav-links" id="navLinks">
+          <!-- Home now integrates the three subsections -->
+          <li><a href="#home" class="active">Home</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#awards">Awards</a></li>
+        </ul>
+        <button id="theme-toggle" aria-label="Toggle Theme">🌙</button>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+      </div>
     </div>
   </nav>
 
-  <!-- Hero Section -->
-  <header id="home">
-    <div class="hero-content">
-      <h1>Welcome to My Profile!</h1>
-      <p>
-        Software Engineering student at McGill University with a passion for continuous learning and innovation.
-      </p>
-      <a href="#about" class="btn">Discover More</a>
-    </div>
-  </header>
-
-  <!-- About Section -->
-  <section id="about">
-    <div class="container content" style="display: flex; flex-wrap: wrap; align-items: center;">
-      <div class="about-text">
-        <h2 class="section-title">About Me</h2>
+  <!-- Integrated Home Section with Three Subsections -->
+  <section id="home" class="visible">
+    <div class="home-container">
+      <!-- Welcome Subsection -->
+      <div class="home-welcome">
+        <h1>Welcome to My Profile!</h1>
         <p>
-          I'm Athmane Benarous, a Software Engineering student in McGill University’s co-op program – with a minor in Aerospace Engineering. I thrive in collaborative and innovative environments, actively participating in programming events, my university’s design team, and various hands-on work experiences.
-        </p>
-        <p>
-          Connect with me:<br />
-          <a href="mailto:athmane.b02@gmail.com">athmane.b02@gmail.com</a> | 438-920-0585 | 
-          <a href="https://www.linkedin.com/in/athmane-benarous" target="_blank">LinkedIn</a> | 
-          <a href="https://github.com/Otm02" target="_blank">GitHub</a>
+          Software Engineering student at McGill University with a passion for continuous learning and
+          innovation.
         </p>
       </div>
-      <div class="about-img">
-        <!-- Replace with your professional photo -->
-        <img src="https://via.placeholder.com/400x400.png?text=Athmane+Benarous" alt="Athmane Benarous" />
+      <!-- About Me Subsection -->
+      <div class="home-about">
+        <div class="about-content">
+          <div class="about-text">
+            <h2>About Me</h2>
+            <p>
+              I'm Athmane Benarous, a Software Engineering student in McGill University’s co-op program –
+              with a minor in Aerospace Engineering.
+              I thrive in collaborative and innovative environments, actively participating in programming
+              events, my university’s design team, and various hands-on work experiences.
+            </p>
+          </div>
+          <div class="about-img">
+            <img src="https://avatars.githubusercontent.com/u/30377400?v=4" alt="Athmane Benarous" />
+          </div>
+        </div>
+      </div>
+      <!-- Connect with Me Subsection -->
+      <div class="home-connect">
+        <h2>Connect with Me</h2>
+        <p>Email: <a href="mailto:athmane.b02@gmail.com">athmane.b02@gmail.com</a></p>
+        <p>Phone: 438-920-0585</p>
+        <p>LinkedIn: <a href="https://www.linkedin.com/in/athmane-benarous" target="_blank">LinkedIn</a></p>
+        <p>GitHub: <a href="https://github.com/Otm02" target="_blank">GitHub</a></p>
       </div>
     </div>
   </section>
 
   <!-- Skills Section -->
   <section id="skills">
-    <div class="container content">
+    <div>
       <h2 class="section-title">Skills</h2>
       <ul>
         <li>Python</li>
@@ -352,7 +429,7 @@
 
   <!-- Experience Section -->
   <section id="experience">
-    <div class="container content">
+    <div>
       <h2 class="section-title">Experience</h2>
       <div class="card-container">
         <div class="card">
@@ -364,28 +441,33 @@
           <h3>Hydro Québec - Cybersecurity Intern</h3>
           <p><strong>May 2024 – Aug 2024</strong></p>
           <p>
-            Streamlined cybersecurity classification reports using Power BI and Power Automate. Maintained ML-driven applications and deployed Python scripts for geolocation, data ingestion, and email transfers.
+            Streamlined cybersecurity classification reports using Power BI and Power Automate.
+            Maintained ML-driven applications and deployed Python scripts for geolocation, data ingestion,
+            and email transfers.
           </p>
         </div>
         <div class="card">
           <h3>Russet House - CRM Development Intern</h3>
           <p><strong>May 2023 – Aug 2023</strong></p>
           <p>
-            Wrote user requirements from live meetings, designed and implemented an SQL database, and converted web page code into ASP.NET C#.
+            Wrote user requirements from live meetings, designed and implemented an SQL database, and
+            converted web page code into ASP.NET C#.
           </p>
         </div>
         <div class="card">
           <h3>CIUSSS du Centre-Sud-de-Montréal - BI Intern</h3>
           <p><strong>May 2022 – Aug 2022</strong></p>
           <p>
-            Collaborated using SCRUM/Agile methodology, developed software with Power Apps, Power BI, Power Automate, and created web components using TypeScript.
+            Collaborated using SCRUM/Agile methodology, developed software with Power Apps, Power BI, Power
+            Automate, and created web components using TypeScript.
           </p>
         </div>
         <div class="card">
           <h3>GSK - Laboratory Technician & Programming Contributor</h3>
           <p><strong>May 2021 – Aug 2021</strong></p>
           <p>
-            Led a glassware reorganization project and programmed an inventory tracking system using Excel VBA.
+            Led a glassware reorganization project and programmed an inventory tracking system using Excel
+            VBA.
           </p>
         </div>
       </div>
@@ -394,48 +476,38 @@
 
   <!-- Projects Section -->
   <section id="projects">
-    <div class="container content">
+    <div>
       <h2 class="section-title">Projects & Hackathons</h2>
       <div class="card-container">
-        <!-- Hackathon Projects -->
         <div class="card">
           <h3>BragainBot</h3>
           <p><strong>McHacks 12 Hackathon</strong> - Jan 2025</p>
-          <p>
-            Implemented an AI application to negotiate ISP pricing in realtime.
-          </p>
-          <p>
-            <a href="https://github.com/Otm02/GreenFilter-AI" target="_blank">GitHub Repo</a>
-          </p>
+          <p>Implemented an AI application to negotiate ISP pricing in realtime.</p>
+          <p><a href="https://github.com/Otm02/GreenFilter-AI" target="_blank">GitHub Repo</a></p>
         </div>
         <div class="card">
           <h3>GreenFilter AI</h3>
           <p><strong>GenAI Competition – AI EarthHack</strong> - Jan 2024</p>
-          <p>
-            Developed a layered AI model to validate sustainable problems and solutions from cleaned data.
+          <p>Developed a layered AI model to validate sustainable problems and solutions from cleaned data.
           </p>
-          <p>
-            <a href="https://github.com/Otm02/GreenFilter-AI" target="_blank">GitHub Repo</a>
-          </p>
+          <p><a href="https://github.com/Otm02/GreenFilter-AI" target="_blank">GitHub Repo</a></p>
         </div>
         <div class="card">
           <h3>Flight Computer Simulation</h3>
           <p><strong>McGill Rocket Team</strong> - Sep 2022 to Aug 2023</p>
-          <p>
-            Simulated rocket flight using RocketPy and integrated with STM32.
-          </p>
-          <p>
-            <a href="#" target="_blank">Learn More</a>
-          </p>
+          <p>Simulated rocket flight using RocketPy and integrated with STM32.</p>
+          <p><a href="#" target="_blank">Learn More</a></p>
         </div>
         <div class="card">
           <h3>Higher, Higher! An Addictive Learning Experience</h3>
           <p><strong>SimpliHacks Hackathon</strong> - Jun 2022</p>
           <p>
-            Collaborated on an AdobeXD and React.JS project to create an interactive game about the environment.
+            Collaborated on an AdobeXD and React.JS project to create an interactive game about the
+            environment.
           </p>
           <p>
-            <a href="https://devpost.com/software/higher-higher-an-addictive-learning-experience" target="_blank">View Project</a>
+            <a href="https://devpost.com/software/higher-higher-an-addictive-learning-experience" target="_blank">View
+              Project</a>
           </p>
         </div>
         <div class="card">
@@ -444,40 +516,32 @@
           <p>
             Developed an Android app featuring to-do lists, reminders, and study timers.
           </p>
-          <p>
-            <a href="https://devpost.com/software/akademos" target="_blank">View Project</a>
-          </p>
+          <p><a href="https://devpost.com/software/akademos" target="_blank">View Project</a></p>
         </div>
         <div class="card">
           <h3>Hermes Discord Bot</h3>
           <p><strong>McHacks 9 Hackathon</strong> - Jan 2022</p>
-          <p>
-            Built a Discord bot to store and deliver message requests.
-          </p>
-          <p>
-            <a href="https://devpost.com/software/memo-discord-bot" target="_blank">View Project</a>
-          </p>
+          <p>Built a Discord bot to store and deliver message requests.</p>
+          <p><a href="https://devpost.com/software/memo-discord-bot" target="_blank">View Project</a></p>
         </div>
-        <!-- School Projects -->
         <div class="card">
           <h3>Purposeful - An Idea Sharing App</h3>
           <p><strong>School Project</strong> - Apr 2023</p>
           <p>
-            Collaborated to create a platform for sharing ideas with complete frontend, backend, and database integration.
+            Collaborated to create a platform for sharing ideas with complete frontend, backend, and
+            database integration.
           </p>
-          <p>
-            <a href="https://github.com/WassimJabz/Purposeful" target="_blank">GitHub Repo</a>
-          </p>
+          <p><a href="https://github.com/WassimJabz/Purposeful" target="_blank">GitHub Repo</a></p>
         </div>
         <div class="card">
           <h3>Museum Management Software</h3>
-          <p><strong>School Project</strong> - Dec 2022</p>
+          <p><strong>School Project</strong> - Dec 2022</strong></p>
           <p>
-            Developed a system to manage museum items, employees, and visitors using Java, Spring, and Vue.JS.
+            Developed a system to manage museum items, employees, and visitors using Java, Spring, and
+            Vue.JS.
           </p>
-          <p>
-            <a href="https://github.com/McGill-ECSE321-Fall2022/project-group-09" target="_blank">GitHub Repo</a>
-          </p>
+          <p><a href="https://github.com/McGill-ECSE321-Fall2022/project-group-09" target="_blank">GitHub
+              Repo</a></p>
         </div>
         <div class="card">
           <h3>Spain Travelling Website</h3>
@@ -485,20 +549,15 @@
           <p>
             Designed the frontend of an informational travelling website with a custom logo.
           </p>
-          <p>
-            <a href="https://watermelonss.neocities.org/tp2/" target="_blank">View Website</a>
-          </p>
+          <p><a href="https://watermelonss.neocities.org/tp2/" target="_blank">View Website</a></p>
         </div>
-        <!-- Work Project -->
         <div class="card">
           <h3>Inventory Tracking Program</h3>
           <p><strong>Work Project</strong> - Aug 2021</p>
           <p>
             Developed a VBA macro to track inventory information for a laboratory team.
           </p>
-          <p>
-            <a href="https://pastebin.com/carrfZUc" target="_blank">View Code</a>
-          </p>
+          <p><a href="https://pastebin.com/carrfZUc" target="_blank">View Code</a></p>
         </div>
       </div>
     </div>
@@ -506,40 +565,20 @@
 
   <!-- Awards Section -->
   <section id="awards">
-    <div class="container content">
+    <div>
       <h2 class="section-title">Awards & Achievements</h2>
       <div class="card-container">
         <div class="card">
           <h3>Bulletin+ Award</h3>
           <p><strong>Bois-de-Boulogne College - May 2021</strong></p>
-          <p>
-            Recognized for 60+ hours of volunteering in the education sector.
-          </p>
+          <p>Recognized for 60+ hours of volunteering in the education sector.</p>
         </div>
         <div class="card">
           <h3>McGill Math and Science Award</h3>
           <p><strong>McGill University - May 2019</strong></p>
-          <p>
-            Awarded for outstanding performance in science and mathematics during high school.
-          </p>
+          <p>Awarded for outstanding performance in science and mathematics during high school.</p>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section id="contact">
-    <div class="container content">
-      <h2 class="section-title">Contact Me</h2>
-      <form onsubmit="event.preventDefault(); alert('Thank you for reaching out!');">
-        <label for="name">Name</label>
-        <input type="text" id="name" placeholder="Your Name" required />
-        <label for="email">Email</label>
-        <input type="email" id="email" placeholder="Your Email" required />
-        <label for="message">Message</label>
-        <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
-        <button type="submit">Send Message</button>
-      </form>
     </div>
   </section>
 
@@ -548,12 +587,97 @@
     <p>&copy; 2025 Athmane Benarous. All Rights Reserved.</p>
   </footer>
 
-  <!-- JavaScript for Mobile Navigation -->
+  <!-- JavaScript -->
   <script>
+    // Toggle mobile navigation
     function toggleMenu() {
       const navLinks = document.getElementById('navLinks');
       navLinks.classList.toggle('nav-active');
     }
+
+    // Toggle theme: update class on body, store preference, and update button emoji.
+    function toggleTheme() {
+      if (document.body.classList.contains('light-theme')) {
+        document.body.classList.remove('light-theme');
+        localStorage.setItem('theme', 'dark');
+        document.getElementById('theme-toggle').textContent = "🌙";
+      } else {
+        document.body.classList.add('light-theme');
+        localStorage.setItem('theme', 'light');
+        document.getElementById('theme-toggle').textContent = "☀️";
+      }
+    }
+    document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
+    // On load, set theme based on localStorage and initialize smooth scroll.
+    document.addEventListener('DOMContentLoaded', function () {
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      if (savedTheme === 'light') {
+        document.body.classList.add('light-theme');
+        document.getElementById('theme-toggle').textContent = "☀️";
+      } else {
+        document.body.classList.remove('light-theme');
+        document.getElementById('theme-toggle').textContent = "🌙";
+      }
+
+      // Smooth full-page scroll with fade effect
+      const sections = document.querySelectorAll('section');
+      const navLinks = document.querySelectorAll('.nav-links a');
+      let currentSection = 0;
+      let isScrolling = false;
+
+      function scrollToSection(index) {
+        if (index < 0 || index >= sections.length || isScrolling) return;
+        isScrolling = true;
+        sections[currentSection].classList.remove('visible');
+        setTimeout(() => {
+          sections[index].scrollIntoView({ behavior: 'smooth' });
+          setTimeout(() => {
+            sections[index].classList.add('visible');
+            navLinks.forEach(link => {
+              link.classList.remove('active');
+              if (link.getAttribute('href').substring(1) === sections[index].id) {
+                link.classList.add('active');
+              }
+            });
+            currentSection = index;
+            setTimeout(() => { isScrolling = false; }, 700);
+          }, 300);
+        }, 700);
+      }
+
+      window.addEventListener('wheel', function (e) {
+        if (isScrolling) return;
+        const scrollable = sections[currentSection].querySelector('.card-container');
+        if (scrollable) {
+          if (e.deltaY > 0 && scrollable.scrollTop + scrollable.offsetHeight < scrollable.scrollHeight) {
+            return;
+          }
+          if (e.deltaY < 0 && scrollable.scrollTop > 0) {
+            return;
+          }
+        }
+        e.preventDefault();
+        if (e.deltaY > 0 && currentSection < sections.length - 1) {
+          scrollToSection(currentSection + 1);
+        } else if (e.deltaY < 0 && currentSection > 0) {
+          scrollToSection(currentSection - 1);
+        }
+      }, { passive: false });
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href').substring(1);
+          sections.forEach((section, index) => {
+            if (section.id === targetId) {
+              scrollToSection(index);
+            }
+          });
+        });
+      });
+    });
   </script>
 </body>
+
 </html>
