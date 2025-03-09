@@ -1,1 +1,5 @@
-# My personal portfolio can be found at [athmanebenarous.com](https://athmanebenarous.com/)
+# Personal Portfolio
+
+Welcome to my personal portfolio 🚀 
+
+You can explore my work and projects at **[athmanebenarous.com](https://athmanebenarous.com/)**.
