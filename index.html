@@ -4,41 +4,48 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Athmane Benarous - Software Engineering student and developer portfolio showcasing technical skills, professional experience, projects, and awards." />
+  <meta name="author" content="Athmane Benarous" />
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
   <title>Athmane Benarous | Dev Portfolio</title>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700&display=swap" rel="stylesheet" />
 
   <style>
     /* CSS Variables for Theming */
     :root {
       --bg-color: #0d0d0d;
-      /* Dark mode background */
-      --text-color: #e0e0e0;
-      --text-secondary: #b0b0b0;
-      --accent-color: #64b5f6;
+      --text-color: #f0f0f0;
+      --text-secondary: #c5c5c5;
+      --accent-color: #d32f2f;
+      --accent-hover: #e53935;
       --nav-bg: #181818;
       --odd-section-bg: #0d0d0d;
       --even-section-bg: #151515;
       --card-bg: #1a1a1a;
-      --skill-bubble-bg: #0D47A1;
-      /* Deeper blue for skills bubbles in dark mode */
-      --shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      --card-border: #2a2a2a;
+      --skill-bubble-bg: #b71c1c;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      --transition-speed: 0.5s;
     }
 
     /* Light theme overrides */
     body.light-theme {
-      --bg-color: #f5f5f5;
+      --bg-color: #ffffff;
       --text-color: #333333;
       --text-secondary: #555555;
-      --accent-color: #007BFF;
+      --accent-color: #c62828;
+      --accent-hover: #d32f2f;
       --nav-bg: #ffffff;
       --odd-section-bg: #ffffff;
-      --even-section-bg: #f0f0f0;
+      --even-section-bg: #f8f8f8;
       --card-bg: #ffffff;
-      --skill-bubble-bg: #90CAF9;
-      --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      --card-border: #e0e0e0;
+      --skill-bubble-bg: #d32f2f;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     /* Reset & Global Styles */
@@ -48,24 +55,41 @@
       box-sizing: border-box;
     }
 
-    html,
-    body {
-      height: 100%;
-      /* Removed overflow: hidden so that content isn’t cut off */
-      font-family: 'Poppins', sans-serif;
-      background: var(--bg-color);
-      color: var(--text-color);
+    html {
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      /* Firefox */
+      -ms-overflow-style: none;
+      /* IE and Edge */
     }
 
-    /* Full-page sections with fade transition */
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar {
+      display: none;
+      /* Chrome, Safari, Opera */
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Raleway', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      scrollbar-width: none;
+      /* Firefox */
+      -ms-overflow-style: none;
+      /* IE and Edge */
+    }
+
+    /* Section Styles with Fade Transition */
     section {
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1rem;
+      padding: 2rem;
       opacity: 0;
-      transition: opacity 0.7s ease-in-out, background-color 0.7s ease-in-out;
+      transition: opacity var(--transition-speed) ease-in-out, background-color var(--transition-speed) ease-in-out;
       scroll-margin-top: 70px;
     }
 
@@ -84,11 +108,11 @@
     a {
       text-decoration: none;
       color: inherit;
-      transition: color 0.3s;
+      transition: color 0.3s, border-color 0.3s;
     }
 
     a:hover {
-      color: var(--accent-color);
+      color: var(--accent-hover);
     }
 
     /* Navigation */
@@ -99,6 +123,7 @@
       background: var(--nav-bg);
       z-index: 100;
       box-shadow: var(--shadow);
+      border-bottom: 1px solid rgba(211, 47, 47, 0.1);
     }
 
     .container {
@@ -112,9 +137,10 @@
     }
 
     .nav-logo {
-      font-size: 1.3rem;
-      font-weight: 600;
+      font-size: 1.5rem;
+      font-weight: 700;
       color: var(--accent-color);
+      letter-spacing: 0.5px;
     }
 
     .nav-right {
@@ -125,15 +151,34 @@
     .nav-links {
       list-style: none;
       display: flex;
+      gap: 1.5rem;
     }
 
-    .nav-links li {
-      margin-left: 1.5rem;
+    .nav-links li a {
+      font-weight: 600;
+      padding-bottom: 0.25rem;
+      position: relative;
     }
 
-    .nav-links a.active {
-      border-bottom: 2px solid var(--accent-color);
+    .nav-links a.active,
+    .nav-links a:hover {
       color: var(--accent-color);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--accent-color);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a.active::after,
+    .nav-links a:hover::after {
+      width: 100%;
     }
 
     /* Theme Toggle Button */
@@ -170,19 +215,44 @@
         right: 0;
         width: 200px;
         background: var(--nav-bg);
+        border: 1px solid var(--accent-color);
+        border-radius: 4px;
       }
 
       .nav-active li {
         padding: 1rem;
-        border-bottom: 1px solid #333;
+        border-bottom: 1px solid var(--text-secondary);
+      }
+
+      .nav-active li:last-child {
+        border-bottom: none;
       }
     }
 
-    /* Integrated Home Section with Three Subsections */
+    /* Section Header Styling */
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -10px;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background-color: var(--accent-color);
+    }
+
+    /* Home Section */
     #home {
-      padding: 2rem;
       padding-top: 80px;
-      /* Ensures content starts below the nav bar */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -194,32 +264,27 @@
       width: 100%;
     }
 
-    .home-welcome,
-    .home-about,
-    .home-connect {
-      margin-bottom: 2rem;
-    }
-
-    /* Welcome Subsection */
     .home-welcome h1 {
-      font-size: 2.5rem;
+      font-size: 4rem;
       margin-bottom: 1rem;
-      text-shadow: var(--shadow);
+      font-weight: 700;
     }
 
     .home-welcome p {
-      font-size: 1.1rem;
-      line-height: 1.6;
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      color: var(--accent-color);
+      font-weight: 500;
     }
 
-    /* About Me Subsection */
     .home-about .about-content {
       display: flex;
-      flex-direction: row;
+      flex-wrap: wrap;
       align-items: center;
       justify-content: center;
-      gap: 2rem;
-      flex-wrap: wrap;
+      gap: 2.5rem;
+      margin-bottom: 2.5rem;
+      margin-top: 2rem;
     }
 
     .home-about .about-text {
@@ -229,44 +294,77 @@
     }
 
     .home-about .about-text h2 {
-      font-size: 2rem;
+      font-size: 2.5rem;
       margin-bottom: 1rem;
-      text-shadow: var(--shadow);
+      position: relative;
+      display: inline-block;
+    }
+
+    .home-about .about-text h2::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 50px;
+      height: 3px;
+      background-color: var(--accent-color);
     }
 
     .home-about .about-text p {
       margin-bottom: 1rem;
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
     .home-about .about-img {
       flex: 1;
-      min-width: 300px;
+      min-width: 250px;
       text-align: center;
     }
 
     .home-about .about-img img {
       border-radius: 8px;
-      max-width: 250px;
-      /* Smaller profile picture */
+      max-width: 280px;
       width: 100%;
       box-shadow: var(--shadow);
+      border: 3px solid rgba(211, 47, 47, 0.2);
+      transition: transform 0.3s ease;
     }
 
-    /* Connect with Me Subsection */
+    .home-about .about-img img:hover {
+      transform: scale(1.02);
+    }
+
     .home-connect h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      text-shadow: var(--shadow);
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .home-connect h2::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 50px;
+      height: 3px;
+      background-color: var (--accent-color);
     }
 
     .home-connect p {
-      margin-bottom: 0.5rem;
-      font-size: 1.1rem;
+      margin-bottom: 0.75rem;
+      font-size: 1.2rem;
     }
 
     .home-connect a {
       color: var(--accent-color);
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .home-connect a:hover {
+      color: var(--accent-hover);
+      text-decoration: underline;
     }
 
     /* Skills Section */
@@ -275,56 +373,159 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      max-width: 800px;
-      margin: 0 auto;
+      gap: 1rem;
+      max-width: 900px;
+      margin: auto;
     }
 
     #skills li {
       background: var(--skill-bubble-bg);
       color: #fff;
-      margin: 0.3rem;
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      font-weight: 500;
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
       box-shadow: var(--shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    #skills li:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
     }
 
     /* Card Layout for Experience/Projects/Awards */
     .card-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-      gap: 1rem;
-      max-width: 1000px;
-      width: 90%;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.8rem;
+      max-width: 1100px;
+      width: 95%;
       margin: auto;
-      max-height: calc(100vh - 150px);
-      overflow-y: auto;
       padding: 1rem;
-      padding-bottom: 2rem;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
+      max-height: 65vh;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent-color) var(--card-bg);
     }
 
     .card-container::-webkit-scrollbar {
-      display: none;
+      width: 8px;
+    }
+
+    .card-container::-webkit-scrollbar-track {
+      background: var(--card-bg);
+    }
+
+    .card-container::-webkit-scrollbar-thumb {
+      background-color: var(--accent-color);
+      border-radius: 10px;
     }
 
     .card {
       background: var(--card-bg);
       border-radius: 8px;
-      padding: 1rem;
+      padding: 1.8rem;
       box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+      border-left: 3px solid var(--accent-color);
+      border-top: 1px solid var(--card-border);
+      border-right: 1px solid var (--card-border);
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
 
     .card h3 {
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
       color: var(--accent-color);
+      font-weight: 700;
     }
 
     .card p {
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
       color: var(--text-secondary);
-      line-height: 1.5;
+    }
+
+    .card p strong {
+      color: var(--text-color);
+    }
+
+    .card a {
+      font-weight: 600;
+      color: var(--accent-color);
+      display: inline-block;
+      margin-top: 0.5rem;
+    }
+
+    .card a:hover {
+      color: var(--accent-hover);
+      text-decoration: underline;
+    }
+
+    /* Section Navigation Arrows */
+    .section-nav {
+      position: fixed;
+      right: 25px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      z-index: 100;
+    }
+
+    .nav-arrow {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--accent-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+      opacity: 0.7;
+      font-size: 1.5rem;
+    }
+
+    .nav-arrow:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .nav-arrow.disabled {
+      background: #555;
+      cursor: not-allowed;
+      opacity: 0.3;
+    }
+
+    .section-indicator {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 10px 0;
+      align-items: center;
+    }
+
+    .indicator-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #555;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      /* Added to show hand cursor on hover */
+    }
+
+    .indicator-dot.active {
+      background: var(--accent-color);
+      transform: scale(1.3);
     }
 
     /* Footer */
@@ -332,9 +533,10 @@
       background: var(--nav-bg);
       color: var(--text-secondary);
       text-align: center;
-      padding: 1rem 0;
+      padding: 1.5rem 0;
       font-size: 0.9rem;
       box-shadow: var(--shadow);
+      border-top: 1px solid rgba(211, 47, 47, 0.1);
     }
   </style>
 </head>
@@ -346,29 +548,34 @@
       <div class="nav-logo">Athmane Benarous</div>
       <div class="nav-right">
         <ul class="nav-links" id="navLinks">
-          <!-- Home now integrates the three subsections -->
-          <li><a href="#home" class="active">Home</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#experience">Experience</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#awards">Awards</a></li>
+          <li><a href="#home" class="active" aria-label="Home">Home</a></li>
+          <li><a href="#skills" aria-label="Technical Skills">Skills</a></li>
+          <li><a href="#experience" aria-label="Experience">Experience</a></li>
+          <li><a href="#projects" aria-label="Projects">Projects</a></li>
+          <li><a href="#awards" aria-label="Awards">Awards</a></li>
         </ul>
         <button id="theme-toggle" aria-label="Toggle Theme">🌙</button>
-        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <div class="menu-toggle" onclick="toggleMenu()" aria-label="Toggle Menu">☰</div>
       </div>
     </div>
   </nav>
 
-  <!-- Integrated Home Section with Three Subsections -->
+  <!-- Section Navigation Arrows -->
+  <div class="section-nav">
+    <div class="nav-arrow" id="nav-prev" title="Previous Section">↑</div>
+    <div class="section-indicator" id="section-dots">
+      <!-- Section dots will be added by JavaScript -->
+    </div>
+    <div class="nav-arrow" id="nav-next" title="Next Section">↓</div>
+  </div>
+
+  <!-- Home Section -->
   <section id="home" class="visible">
     <div class="home-container">
       <!-- Welcome Subsection -->
       <div class="home-welcome">
-        <h1>Welcome to My Profile!</h1>
-        <p>
-          Software Engineering student at McGill University with a passion for continuous learning and
-          innovation.
-        </p>
+        <h1>Hello, I'm Athmane Benarous</h1>
+        <p>Software Engineering Grad | Learner | Innovator</p>
       </div>
       <!-- About Me Subsection -->
       <div class="home-about">
@@ -376,24 +583,25 @@
           <div class="about-text">
             <h2>About Me</h2>
             <p>
-              I'm Athmane Benarous, a Software Engineering student in McGill University’s co-op program –
-              with a minor in Aerospace Engineering.
-              I thrive in collaborative and innovative environments, actively participating in programming
-              events, my university’s design team, and various hands-on work experiences.
+              I am a passionate Software Engineering student at McGill University with a Minor in Aerospace Engineering.
+              I am actively engaged in software engineering projects and
+              innovative solutions. With expertise in development, cybersecurity, and data analytics, I consistently
+              bring creative solutions to complex challenges.
             </p>
           </div>
           <div class="about-img">
-            <img src="https://avatars.githubusercontent.com/u/30377400?v=4" alt="Athmane Benarous" />
+            <img src="https://avatars.githubusercontent.com/u/30377400?v=4" alt="Athmane Benarous Portrait" />
           </div>
         </div>
       </div>
       <!-- Connect with Me Subsection -->
       <div class="home-connect">
-        <h2>Connect with Me</h2>
+        <h2>Get In Touch</h2>
         <p>Email: <a href="mailto:athmane.b02@gmail.com">athmane.b02@gmail.com</a></p>
-        <p>Phone: 438-920-0585</p>
-        <p>LinkedIn: <a href="https://www.linkedin.com/in/athmane-benarous" target="_blank">LinkedIn</a></p>
-        <p>GitHub: <a href="https://github.com/Otm02" target="_blank">GitHub</a></p>
+        <p>Phone: <a href="tel:+16439200585">+1 (438) 920-0585</a></p>
+        <p>LinkedIn: <a href="https://www.linkedin.com/in/athmane-benarous" target="_blank" rel="noopener">LinkedIn</a>
+        </p>
+        <p>GitHub: <a href="https://github.com/Otm02" target="_blank" rel="noopener">GitHub</a></p>
       </div>
     </div>
   </section>
@@ -401,28 +609,19 @@
   <!-- Skills Section -->
   <section id="skills">
     <div>
-      <h2 class="section-title">Skills</h2>
+      <h2 class="section-title">Technical Skills</h2>
       <ul>
         <li>Python</li>
-        <li>C</li>
-        <li>Java</li>
-        <li>JavaScript</li>
-        <li>SQL Server</li>
-        <li>React.JS</li>
-        <li>C++</li>
-        <li>C#</li>
-        <li>Express.JS</li>
-        <li>Next.JS</li>
-        <li>TypeScript</li>
-        <li>Bash</li>
-        <li>VBA</li>
-        <li>UML</li>
-        <li>Gherkin</li>
-        <li>ARM Assembly</li>
-        <li>Vue</li>
+        <li>C / C++</li>
+        <li>Java / C#</li>
+        <li>JavaScript / TypeScript</li>
+        <li>React.js / Next.js / Vue.js</li>
+        <li>SQL / PostgreSQL / SQL Server</li>
+        <li>Express.js / Spring Boot</li>
         <li>TensorFlow</li>
-        <li>Spring</li>
-        <li>PostgreSQL</li>
+        <li>Bash / VBA</li>
+        <li>UML / Gherkin</li>
+        <li>ARM Assembly</li>
       </ul>
     </div>
   </section>
@@ -430,44 +629,43 @@
   <!-- Experience Section -->
   <section id="experience">
     <div>
-      <h2 class="section-title">Experience</h2>
+      <h2 class="section-title">Professional Experience</h2>
       <div class="card-container">
         <div class="card">
-          <h3>Russet House - IT Developer</h3>
+          <h3>Russet House – IT Developer</h3>
           <p><strong>Oct 2023 – Present</strong></p>
-          <p>Develop and maintain SCADA software.</p>
+          <p>Developing and maintaining SCADA software with an emphasis on reliability and real-time performance.</p>
         </div>
         <div class="card">
-          <h3>Hydro Québec - Cybersecurity Intern</h3>
+          <h3>Hydro Québec – Cybersecurity Intern</h3>
           <p><strong>May 2024 – Aug 2024</strong></p>
           <p>
-            Streamlined cybersecurity classification reports using Power BI and Power Automate.
-            Maintained ML-driven applications and deployed Python scripts for geolocation, data ingestion,
-            and email transfers.
+            Streamlined cybersecurity classification reports using Power BI and Power Automate while managing ML-driven
+            applications with Python scripts for geolocation and secure data transfers.
           </p>
         </div>
         <div class="card">
-          <h3>Russet House - CRM Development Intern</h3>
+          <h3>Russet House – CRM Development Intern</h3>
           <p><strong>May 2023 – Aug 2023</strong></p>
           <p>
-            Wrote user requirements from live meetings, designed and implemented an SQL database, and
-            converted web page code into ASP.NET C#.
+            Collaborated on gathering requirements, designed an SQL database, and modernized web pages with ASP.NET and
+            C#.
           </p>
         </div>
         <div class="card">
-          <h3>CIUSSS du Centre-Sud-de-Montréal - BI Intern</h3>
+          <h3>CIUSSS du Centre-Sud-de-Montréal – BI Intern</h3>
           <p><strong>May 2022 – Aug 2022</strong></p>
           <p>
-            Collaborated using SCRUM/Agile methodology, developed software with Power Apps, Power BI, Power
-            Automate, and created web components using TypeScript.
+            Worked within an Agile team to develop solutions using Power Apps, Power BI, and Power Automate while
+            building web components with TypeScript.
           </p>
         </div>
         <div class="card">
-          <h3>GSK - Laboratory Technician & Programming Contributor</h3>
+          <h3>GSK – Laboratory Technician & Programming Contributor</h3>
           <p><strong>May 2021 – Aug 2021</strong></p>
           <p>
-            Led a glassware reorganization project and programmed an inventory tracking system using Excel
-            VBA.
+            Led a laboratory reorganization project and developed an inventory tracking system using Excel VBA to
+            improve efficiency.
           </p>
         </div>
       </div>
@@ -482,82 +680,89 @@
         <div class="card">
           <h3>BragainBot</h3>
           <p><strong>McHacks 12 Hackathon</strong> - Jan 2025</p>
-          <p>Implemented an AI application to negotiate ISP pricing in realtime.</p>
-          <p><a href="https://github.com/Otm02/GreenFilter-AI" target="_blank">GitHub Repo</a></p>
+          <p>Implemented an AI-driven application to negotiate ISP pricing in real time.</p>
+          <p><strong>Tech Stack:</strong> React.js, Express.js</p>
+          <p><a href="https://github.com/Otm02/GreenFilter-AI" target="_blank" rel="noopener">GitHub Repo</a></p>
         </div>
         <div class="card">
           <h3>GreenFilter AI</h3>
           <p><strong>GenAI Competition – AI EarthHack</strong> - Jan 2024</p>
-          <p>Developed a layered AI model to validate sustainable problems and solutions from cleaned data.
-          </p>
-          <p><a href="https://github.com/Otm02/GreenFilter-AI" target="_blank">GitHub Repo</a></p>
+          <p>Developed a layered AI model to validate sustainable solutions using cleaned data sets.</p>
+          <p><strong>Tech Stack:</strong> Python, Jupyter Notebook</p>
+          <p><a href="https://github.com/Otm02/GreenFilter-AI" target="_blank" rel="noopener">GitHub Repo</a></p>
         </div>
         <div class="card">
           <h3>Flight Computer Simulation</h3>
           <p><strong>McGill Rocket Team</strong> - Sep 2022 to Aug 2023</p>
-          <p>Simulated rocket flight using RocketPy and integrated with STM32.</p>
-          <p><a href="#" target="_blank">Learn More</a></p>
+          <p>Simulated rocket flight dynamics with RocketPy and integrated with STM32-based hardware.</p>
+          <p><strong>Tech Stack:</strong> Python, C</p>
+          <p><a href="#" target="_blank" rel="noopener">Learn More</a></p>
         </div>
         <div class="card">
-          <h3>Higher, Higher! An Addictive Learning Experience</h3>
+          <h3>Higher, Higher! – Interactive Learning Game</h3>
           <p><strong>SimpliHacks Hackathon</strong> - Jun 2022</p>
           <p>
-            Collaborated on an AdobeXD and React.JS project to create an interactive game about the
-            environment.
+            Designed an engaging AdobeXD prototype and built an interactive React.js game to educate users about
+            environmental issues.
           </p>
-          <p>
-            <a href="https://devpost.com/software/higher-higher-an-addictive-learning-experience" target="_blank">View
-              Project</a>
-          </p>
+          <p><strong>Tech Stack:</strong> React.js, Git, AdobeXD</p>
+          <p><a href="https://devpost.com/software/higher-higher-an-addictive-learning-experience" target="_blank"
+              rel="noopener">View Project</a></p>
         </div>
         <div class="card">
-          <h3>Akademos - Student App</h3>
+          <h3>Akademos – Student Productivity App</h3>
           <p><strong>Code.Jam() XI Hackathon</strong> - Feb 2022</p>
           <p>
-            Developed an Android app featuring to-do lists, reminders, and study timers.
+            Developed an Android app featuring to-do lists, reminders, and study timers to enhance student productivity.
           </p>
-          <p><a href="https://devpost.com/software/akademos" target="_blank">View Project</a></p>
+          <p><strong>Tech Stack:</strong> Kotlin, Git</p>
+          <p><a href="https://devpost.com/software/akademos" target="_blank" rel="noopener">View Project</a></p>
         </div>
         <div class="card">
-          <h3>Hermes Discord Bot</h3>
+          <h3>Hermes – Discord Bot</h3>
           <p><strong>McHacks 9 Hackathon</strong> - Jan 2022</p>
-          <p>Built a Discord bot to store and deliver message requests.</p>
-          <p><a href="https://devpost.com/software/memo-discord-bot" target="_blank">View Project</a></p>
+          <p>Created a Discord bot for efficient message management and delivery.</p>
+          <p><strong>Tech Stack:</strong> Java, Git</p>
+          <p><a href="https://devpost.com/software/memo-discord-bot" target="_blank" rel="noopener">View Project</a></p>
         </div>
         <div class="card">
-          <h3>Purposeful - An Idea Sharing App</h3>
+          <h3>Purposeful – Idea Sharing Platform</h3>
           <p><strong>School Project</strong> - Apr 2023</p>
           <p>
-            Collaborated to create a platform for sharing ideas with complete frontend, backend, and
-            database integration.
+            Collaborated on a full-stack project integrating frontend, backend, and database to create a platform for
+            sharing innovative ideas.
           </p>
-          <p><a href="https://github.com/WassimJabz/Purposeful" target="_blank">GitHub Repo</a></p>
+          <p><strong>Tech Stack:</strong> Java, Spring, Gherkin, Next.js, Git</p>
+          <p><a href="https://github.com/WassimJabz/Purposeful" target="_blank" rel="noopener">GitHub Repo</a></p>
         </div>
         <div class="card">
           <h3>Museum Management Software</h3>
-          <p><strong>School Project</strong> - Dec 2022</strong></p>
+          <p><strong>School Project</strong> - Dec 2022</p>
           <p>
-            Developed a system to manage museum items, employees, and visitors using Java, Spring, and
-            Vue.JS.
+            Engineered a system to manage museum collections, staff, and visitor interactions using Java, Spring Boot,
+            and Vue.js.
           </p>
-          <p><a href="https://github.com/McGill-ECSE321-Fall2022/project-group-09" target="_blank">GitHub
+          <p><strong>Tech Stack:</strong> Java, Spring, Gherkin, Vue.js, Git</p>
+          <p><a href="https://github.com/McGill-ECSE321-Fall2022/project-group-09" target="_blank" rel="noopener">GitHub
               Repo</a></p>
         </div>
         <div class="card">
           <h3>Spain Travelling Website</h3>
           <p><strong>School Project</strong> - May 2021</p>
           <p>
-            Designed the frontend of an informational travelling website with a custom logo.
+            Developed an informational travelling website with a custom logo and responsive design.
           </p>
-          <p><a href="https://watermelonss.neocities.org/tp2/" target="_blank">View Website</a></p>
+          <p><strong>Tech Stack:</strong> HTML, CSS</p>
+          <p><a href="https://watermelonss.neocities.org/tp2/" target="_blank" rel="noopener">View Website</a></p>
         </div>
         <div class="card">
           <h3>Inventory Tracking Program</h3>
           <p><strong>Work Project</strong> - Aug 2021</p>
           <p>
-            Developed a VBA macro to track inventory information for a laboratory team.
+            Designed a VBA macro to streamline inventory management for a laboratory team.
           </p>
-          <p><a href="https://pastebin.com/carrfZUc" target="_blank">View Code</a></p>
+          <p><strong>Tech Stack:</strong> VBA</p>
+          <p><a href="https://pastebin.com/carrfZUc" target="_blank" rel="noopener">View Code</a></p>
         </div>
       </div>
     </div>
@@ -566,17 +771,17 @@
   <!-- Awards Section -->
   <section id="awards">
     <div>
-      <h2 class="section-title">Awards & Achievements</h2>
+      <h2 class="section-title">Awards & Recognitions</h2>
       <div class="card-container">
         <div class="card">
           <h3>Bulletin+ Award</h3>
           <p><strong>Bois-de-Boulogne College - May 2021</strong></p>
-          <p>Recognized for 60+ hours of volunteering in the education sector.</p>
+          <p>Honored for over 60 hours of dedicated volunteer service in the education sector.</p>
         </div>
         <div class="card">
           <h3>McGill Math and Science Award</h3>
           <p><strong>McGill University - May 2019</strong></p>
-          <p>Awarded for outstanding performance in science and mathematics during high school.</p>
+          <p>Recognized for exceptional performance in mathematics and science during high school.</p>
         </div>
       </div>
     </div>
@@ -594,8 +799,7 @@
       const navLinks = document.getElementById('navLinks');
       navLinks.classList.toggle('nav-active');
     }
-
-    // Toggle theme: update class on body, store preference, and update button emoji.
+    // Toggle theme function
     function toggleTheme() {
       if (document.body.classList.contains('light-theme')) {
         document.body.classList.remove('light-theme');
@@ -609,9 +813,9 @@
     }
     document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
 
-    // On load, set theme based on localStorage and initialize smooth scroll.
+    // On load: set theme based on saved preference and initialize smooth section scrolling with fade effects.
     document.addEventListener('DOMContentLoaded', function () {
-      const savedTheme = localStorage.getItem('theme') || 'dark';
+      const savedTheme = localStorage.getItem('theme') || 'light';
       if (savedTheme === 'light') {
         document.body.classList.add('light-theme');
         document.getElementById('theme-toggle').textContent = "☀️";
@@ -620,11 +824,67 @@
         document.getElementById('theme-toggle').textContent = "🌙";
       }
 
-      // Smooth full-page scroll with fade effect
       const sections = document.querySelectorAll('section');
       const navLinks = document.querySelectorAll('.nav-links a');
+      const sectionDots = document.getElementById('section-dots');
+      const navPrev = document.getElementById('nav-prev');
+      const navNext = document.getElementById('nav-next');
       let currentSection = 0;
       let isScrolling = false;
+
+      // Create section indicator dots
+      sections.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.classList.add('indicator-dot');
+        if (index === currentSection) dot.classList.add('active');
+        dot.addEventListener('click', () => scrollToSection(index));
+        sectionDots.appendChild(dot);
+      });
+
+      function updateNavArrows() {
+        // Update prev arrow state
+        if (currentSection <= 0) {
+          navPrev.classList.add('disabled');
+        } else {
+          navPrev.classList.remove('disabled');
+        }
+
+        // Update next arrow state
+        if (currentSection >= sections.length - 1) {
+          navNext.classList.add('disabled');
+        } else {
+          navNext.classList.remove('disabled');
+        }
+
+        // Update indicator dots
+        const dots = document.querySelectorAll('.indicator-dot');
+        dots.forEach((dot, index) => {
+          if (index === currentSection) {
+            dot.classList.add('active');
+          } else {
+            dot.classList.remove('active');
+          }
+        });
+
+        // Update active nav link
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href').substring(1) === sections[currentSection].id) {
+            link.classList.add('active');
+          }
+        });
+      }
+
+      // Check if current section's content is fully scrolled
+      function isScrolledToBottom(container) {
+        if (!container) return true;
+        return Math.abs(container.scrollHeight - container.scrollTop - container.clientHeight) < 3;
+      }
+
+      function isScrolledToTop(container) {
+        if (!container) return true;
+        return container.scrollTop <= 0;
+      }
 
       function scrollToSection(index) {
         if (index < 0 || index >= sections.length || isScrolling) return;
@@ -634,30 +894,66 @@
           sections[index].scrollIntoView({ behavior: 'smooth' });
           setTimeout(() => {
             sections[index].classList.add('visible');
-            navLinks.forEach(link => {
-              link.classList.remove('active');
-              if (link.getAttribute('href').substring(1) === sections[index].id) {
-                link.classList.add('active');
-              }
-            });
             currentSection = index;
-            setTimeout(() => { isScrolling = false; }, 700);
+            updateNavArrows();
+
+            // Reset scrollable areas when changing sections
+            const scrollable = sections[index].querySelector('.card-container');
+            if (scrollable) {
+              scrollable.scrollTop = 0;
+            }
+
+            setTimeout(() => { isScrolling = false; }, 500);
           }, 300);
-        }, 700);
+        }, 500);
       }
+
+      // Add event listeners to nav links
+      navLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href').substring(1);
+          const targetIndex = Array.from(sections).findIndex(section => section.id === targetId);
+          if (targetIndex !== -1) {
+            scrollToSection(targetIndex);
+          }
+
+          // Close mobile menu if open
+          document.getElementById('navLinks').classList.remove('nav-active');
+        });
+      });
+
+      navPrev.addEventListener('click', () => {
+        if (currentSection > 0 && !isScrolling) {
+          scrollToSection(currentSection - 1);
+        }
+      });
+
+      navNext.addEventListener('click', () => {
+        if (currentSection < sections.length - 1 && !isScrolling) {
+          scrollToSection(currentSection + 1);
+        }
+      });
 
       window.addEventListener('wheel', function (e) {
         if (isScrolling) return;
+
         const scrollable = sections[currentSection].querySelector('.card-container');
+
         if (scrollable) {
-          if (e.deltaY > 0 && scrollable.scrollTop + scrollable.offsetHeight < scrollable.scrollHeight) {
+          // If scrolling down and not at bottom of scrollable content, let the container scroll
+          if (e.deltaY > 0 && !isScrolledToBottom(scrollable)) {
             return;
           }
-          if (e.deltaY < 0 && scrollable.scrollTop > 0) {
+
+          // If scrolling up and not at top of scrollable content, let the container scroll
+          if (e.deltaY < 0 && !isScrolledToTop(scrollable)) {
             return;
           }
         }
+
         e.preventDefault();
+
         if (e.deltaY > 0 && currentSection < sections.length - 1) {
           scrollToSection(currentSection + 1);
         } else if (e.deltaY < 0 && currentSection > 0) {
@@ -665,17 +961,8 @@
         }
       }, { passive: false });
 
-      navLinks.forEach(link => {
-        link.addEventListener('click', function (e) {
-          e.preventDefault();
-          const targetId = this.getAttribute('href').substring(1);
-          sections.forEach((section, index) => {
-            if (section.id === targetId) {
-              scrollToSection(index);
-            }
-          });
-        });
-      });
+      // Initialize arrows state
+      updateNavArrows();
     });
   </script>
 </body>
