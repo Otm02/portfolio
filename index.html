@@ -13,6 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <style>
     /* CSS Variables for Theming */
@@ -334,6 +336,13 @@
       transform: scale(1.02);
     }
 
+    .home-connect {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: left;
+    }
+
     .home-connect h2 {
       font-size: 2.5rem;
       margin-bottom: 1.5rem;
@@ -538,6 +547,142 @@
       box-shadow: var(--shadow);
       border-top: 1px solid rgba(211, 47, 47, 0.1);
     }
+
+    /* CV Download Button */
+    .cv-download {
+      display: inline-block;
+      background-color: var(--accent-color);
+      color: white;
+      padding: 0.8rem 1.8rem;
+      border-radius: 50px;
+      font-weight: 600;
+      margin-top: 1.2rem;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+    }
+
+    .cv-download:hover {
+      background-color: var(--accent-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+      color: white;
+    }
+
+    /* Contact Icons */
+    .contact-items {
+      display: flex;
+      flex-direction: row;
+      /* Arrange items in a row */
+      justify-content: center;
+      /* Center horizontally */
+      flex-wrap: wrap;
+      /* Wrap on smaller screens */
+      gap: 1.5rem;
+      /* Space between items */
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      /* Space between icon and text */
+    }
+
+    .contact-icon {
+      font-size: 1.5rem;
+      color: var(--accent-color);
+    }
+
+    /* Filter Buttons */
+    .filter-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .filter-btn {
+      background-color: var(--card-bg);
+      color: var(--text-color);
+      border: 1px solid var(--card-border);
+      border-radius: 50px;
+      padding: 0.6rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .filter-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .filter-btn.active {
+      background-color: var(--accent-color);
+      color: white;
+      border-color: var(--accent-color);
+    }
+
+    /* Project card transition for filtering */
+    .card {
+      transition: opacity 0.7s ease, transform 0.7s ease;
+      backface-visibility: hidden;
+    }
+
+    .card.hidden {
+      opacity: 0;
+      transform: scale(0.95);
+      display: none;
+    }
+
+    /* Improve card container for better filtering */
+    #projects .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.8rem;
+      min-height: 400px;
+      /* Add minimum height to prevent container collapse during transitions */
+    }
+
+    /* Add fade-in animation for cards */
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      30% {
+        opacity: 0.3;
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.8s ease-out forwards;
+    }
+
+    /* Add fade-in animation for cards */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease forwards;
+    }
   </style>
 </head>
 
@@ -588,6 +733,10 @@
               innovative solutions. With expertise in development, cybersecurity, and data analytics, I consistently
               bring creative solutions to complex challenges.
             </p>
+            <a href="https://raw.githubusercontent.com/Otm02/portfolio/main/Athmane_CV_01-2025.pdf" target="_blank"
+              class="cv-download">
+              <i class="fas fa-file-download"></i> CV
+            </a>
           </div>
           <div class="about-img">
             <img src="https://avatars.githubusercontent.com/u/30377400?v=4" alt="Athmane Benarous Portrait" />
@@ -597,11 +746,20 @@
       <!-- Connect with Me Subsection -->
       <div class="home-connect">
         <h2>Get In Touch</h2>
-        <p>Email: <a href="mailto:athmane.b02@gmail.com">athmane.b02@gmail.com</a></p>
-        <p>Phone: <a href="tel:+16439200585">+1 (438) 920-0585</a></p>
-        <p>LinkedIn: <a href="https://www.linkedin.com/in/athmane-benarous" target="_blank" rel="noopener">LinkedIn</a>
-        </p>
-        <p>GitHub: <a href="https://github.com/Otm02" target="_blank" rel="noopener">GitHub</a></p>
+        <div class="contact-items">
+          <div class="contact-item">
+            <i class="contact-icon fas fa-envelope"></i>
+            <a href="mailto:athmane.b02@gmail.com">athmane.b02@gmail.com</a>
+          </div>
+          <div class="contact-item">
+            <i class="contact-icon fab fa-linkedin"></i>
+            <a href="https://www.linkedin.com/in/athmane-benarous" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
+          <div class="contact-item">
+            <i class="contact-icon fab fa-github"></i>
+            <a href="https://github.com/Otm02" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -676,29 +834,37 @@
   <section id="projects">
     <div>
       <h2 class="section-title">Projects & Hackathons</h2>
+
+      <!-- Project Filter Buttons -->
+      <div class="filter-container">
+        <button class="filter-btn active" data-filter="all">All Projects</button>
+        <button class="filter-btn" data-filter="hackathon">Hackathon</button>
+        <button class="filter-btn" data-filter="school">School</button>
+        <button class="filter-btn" data-filter="personal">Personal</button>
+      </div>
+
       <div class="card-container">
-        <div class="card">
+        <div class="card" data-type="hackathon">
           <h3>BragainBot</h3>
           <p><strong>McHacks 12 Hackathon</strong> - Jan 2025</p>
           <p>Implemented an AI-driven application to negotiate ISP pricing in real time.</p>
           <p><strong>Tech Stack:</strong> React.js, Express.js</p>
-          <p><a href="https://github.com/Otm02/GreenFilter-AI" target="_blank" rel="noopener">GitHub Repo</a></p>
+          <p><a href="https://devpost.com/software/bargainbot" target="_blank" rel="noopener">View Project</a></p>
         </div>
-        <div class="card">
+        <div class="card" data-type="hackathon">
           <h3>GreenFilter AI</h3>
           <p><strong>GenAI Competition – AI EarthHack</strong> - Jan 2024</p>
           <p>Developed a layered AI model to validate sustainable solutions using cleaned data sets.</p>
           <p><strong>Tech Stack:</strong> Python, Jupyter Notebook</p>
           <p><a href="https://github.com/Otm02/GreenFilter-AI" target="_blank" rel="noopener">GitHub Repo</a></p>
         </div>
-        <div class="card">
+        <div class="card" data-type="personal">
           <h3>Flight Computer Simulation</h3>
           <p><strong>McGill Rocket Team</strong> - Sep 2022 to Aug 2023</p>
           <p>Simulated rocket flight dynamics with RocketPy and integrated with STM32-based hardware.</p>
           <p><strong>Tech Stack:</strong> Python, C</p>
-          <p><a href="#" target="_blank" rel="noopener">Learn More</a></p>
         </div>
-        <div class="card">
+        <div class="card" data-type="hackathon">
           <h3>Higher, Higher! – Interactive Learning Game</h3>
           <p><strong>SimpliHacks Hackathon</strong> - Jun 2022</p>
           <p>
@@ -709,7 +875,7 @@
           <p><a href="https://devpost.com/software/higher-higher-an-addictive-learning-experience" target="_blank"
               rel="noopener">View Project</a></p>
         </div>
-        <div class="card">
+        <div class="card" data-type="hackathon">
           <h3>Akademos – Student Productivity App</h3>
           <p><strong>Code.Jam() XI Hackathon</strong> - Feb 2022</p>
           <p>
@@ -718,14 +884,14 @@
           <p><strong>Tech Stack:</strong> Kotlin, Git</p>
           <p><a href="https://devpost.com/software/akademos" target="_blank" rel="noopener">View Project</a></p>
         </div>
-        <div class="card">
+        <div class="card" data-type="hackathon">
           <h3>Hermes – Discord Bot</h3>
           <p><strong>McHacks 9 Hackathon</strong> - Jan 2022</p>
           <p>Created a Discord bot for efficient message management and delivery.</p>
           <p><strong>Tech Stack:</strong> Java, Git</p>
           <p><a href="https://devpost.com/software/memo-discord-bot" target="_blank" rel="noopener">View Project</a></p>
         </div>
-        <div class="card">
+        <div class="card" data-type="school">
           <h3>Purposeful – Idea Sharing Platform</h3>
           <p><strong>School Project</strong> - Apr 2023</p>
           <p>
@@ -735,7 +901,7 @@
           <p><strong>Tech Stack:</strong> Java, Spring, Gherkin, Next.js, Git</p>
           <p><a href="https://github.com/WassimJabz/Purposeful" target="_blank" rel="noopener">GitHub Repo</a></p>
         </div>
-        <div class="card">
+        <div class="card" data-type="school">
           <h3>Museum Management Software</h3>
           <p><strong>School Project</strong> - Dec 2022</p>
           <p>
@@ -746,7 +912,7 @@
           <p><a href="https://github.com/McGill-ECSE321-Fall2022/project-group-09" target="_blank" rel="noopener">GitHub
               Repo</a></p>
         </div>
-        <div class="card">
+        <div class="card" data-type="school">
           <h3>Spain Travelling Website</h3>
           <p><strong>School Project</strong> - May 2021</p>
           <p>
@@ -755,7 +921,7 @@
           <p><strong>Tech Stack:</strong> HTML, CSS</p>
           <p><a href="https://watermelonss.neocities.org/tp2/" target="_blank" rel="noopener">View Website</a></p>
         </div>
-        <div class="card">
+        <div class="card" data-type="personal">
           <h3>Inventory Tracking Program</h3>
           <p><strong>Work Project</strong> - Aug 2021</p>
           <p>
@@ -878,7 +1044,7 @@
       // Check if current section's content is fully scrolled
       function isScrolledToBottom(container) {
         if (!container) return true;
-        return Math.abs(container.scrollHeight - container.scrollTop - container.clientHeight) < 3;
+        return Math.abs(container.scrollHeight - container.scrollTop - container.clientHeight) < 2;
       }
 
       function isScrolledToTop(container) {
@@ -941,13 +1107,21 @@
         const scrollable = sections[currentSection].querySelector('.card-container');
 
         if (scrollable) {
+          // If the mouse is over the scrollable container and it has scrollable content
+          const rect = scrollable.getBoundingClientRect();
+          const isMouseOverContainer =
+            e.clientX >= rect.left &&
+            e.clientX <= rect.right &&
+            e.clientY >= rect.top &&
+            e.clientY <= rect.bottom;
+
           // If scrolling down and not at bottom of scrollable content, let the container scroll
-          if (e.deltaY > 0 && !isScrolledToBottom(scrollable)) {
+          if (e.deltaY > 0 && !isScrolledToBottom(scrollable) && isMouseOverContainer) {
             return;
           }
 
           // If scrolling up and not at top of scrollable content, let the container scroll
-          if (e.deltaY < 0 && !isScrolledToTop(scrollable)) {
+          if (e.deltaY < 0 && !isScrolledToTop(scrollable) && isMouseOverContainer) {
             return;
           }
         }
@@ -963,6 +1137,72 @@
 
       // Initialize arrows state
       updateNavArrows();
+
+      // Project filtering
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const projectCards = document.querySelectorAll('#projects .card');
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+          const filterValue = this.getAttribute('data-filter');
+
+          // Don't do anything if the button is already active
+          if (this.classList.contains('active')) return;
+
+          // Update active button
+          filterBtns.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+
+          // Allow scrollable container to reset scroll position
+          const cardContainer = document.querySelector('#projects .card-container');
+          if (cardContainer) {
+            cardContainer.scrollTop = 0;
+          }
+
+          // Handle filtering with one clean transition
+          projectCards.forEach((card, index) => {
+            // Remove any existing animation classes
+            card.classList.remove('fade-in');
+
+            const isVisible = filterValue === 'all' || card.getAttribute('data-type') === filterValue;
+
+            if (isVisible) {
+              // If the card should be visible but is currently hidden
+              if (card.classList.contains('hidden')) {
+                card.classList.remove('hidden');
+                // Stagger delays for smoother appearance
+                setTimeout(() => {
+                  card.classList.add('fade-in');
+                }, 80 * index); // Increase delay between cards
+              }
+            } else {
+              // If the card should be hidden
+              card.classList.add('hidden');
+            }
+          });
+        });
+      });
+
+      // Apply initial fade-in to all cards only once on page load
+      setTimeout(() => {
+        let index = 0;
+        const staggerCards = () => {
+          if (index < projectCards.length) {
+            projectCards[index].classList.add('fade-in');
+            index++;
+            setTimeout(staggerCards, 80); // Slower initial animation too
+          }
+        };
+        staggerCards();
+      }, 500);
+
+      // Handle scrollable container events
+      document.querySelectorAll('.card-container').forEach(container => {
+        container.addEventListener('scroll', function (e) {
+          // Prevent propagation when scrolling inside containers
+          e.stopPropagation();
+        });
+      });
     });
   </script>
 </body>
