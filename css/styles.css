@@ -38,6 +38,15 @@ body.light-theme {
     box-sizing: border-box;
 }
 
+html,
+body {
+    height: 100%;
+    overflow-x: hidden;
+    /* Prevent horizontal scroll */
+    width: 100%;
+    position: relative;
+}
+
 html {
     scroll-behavior: smooth;
     scrollbar-width: none;
@@ -62,11 +71,16 @@ body {
     /* Firefox */
     -ms-overflow-style: none;
     /* IE and Edge */
+    overflow-y: auto;
+    /* Allow vertical scrolling */
 }
 
 /* Section Styles with Fade Transition */
 section {
     min-height: 100vh;
+    /* Full viewport height */
+    width: 100vw;
+    /* Full viewport width */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -74,6 +88,19 @@ section {
     opacity: 0;
     transition: opacity var(--transition-speed) ease-in-out, background-color var(--transition-speed) ease-in-out;
     scroll-margin-top: 70px;
+    box-sizing: border-box;
+    /* Include padding in width/height calculation */
+    overflow: hidden;
+    /* Hide overflow */
+}
+
+section>div {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 section.visible {
@@ -655,38 +682,59 @@ footer {
 
     /* Section adjustments */
     section {
-        padding: 1.5rem 1rem;
+        padding: 1.5rem 0.8rem;
         min-height: 100vh;
-        /* Maintain full height */
-        height: auto;
-        /* Allow content to determine height */
+        height: 100%;
+        /* Full height */
+        width: 100vw;
+        /* Full width */
+        overflow-x: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+
+    /* Container width adjustment */
+    .container,
+    .home-container {
         width: 100%;
-        /* Ensure full width */
+        padding: 0 0.8rem;
     }
 
     /* Reduce section title size */
     .section-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
         margin-bottom: 1.5rem;
+        width: 100%;
+        text-align: center;
     }
 
     /* Adjust home section content */
     .home-welcome h1 {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
+        padding: 0 0.5rem;
     }
 
     .home-welcome p {
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
 
     /* Make about section stack vertically */
     .home-about .about-content {
         flex-direction: column-reverse;
         text-align: center;
+        width: 100%;
     }
 
     .home-about .about-text {
         text-align: center;
+        width: 100%;
+        padding: 0 0.5rem;
+    }
+
+    .home-about .about-text h2 {
+        font-size: 2rem;
     }
 
     .home-about .about-text h2::after {
@@ -698,20 +746,29 @@ footer {
     .contact-items {
         flex-direction: column;
         align-items: center;
+        width: 100%;
     }
 
     /* Card container adjustments */
     .card-container {
         grid-template-columns: 1fr;
         /* Single column on mobile */
-        max-height: 60vh;
-        /* Slightly smaller height for better control */
+        max-height: 55vh;
+        /* Smaller height for better control */
+        width: 100%;
+        padding: 0.8rem;
+    }
+
+    /* Card adjustments for mobile */
+    .card {
+        padding: 1.5rem;
+        width: 100%;
     }
 
     /* Section navigation position */
     .section-nav {
-        right: 10px;
-        /* Move closer to edge on mobile */
+        right: 5px;
+        /* Move even closer to edge on mobile */
         top: 50%;
         transform: translateY(-50%);
         z-index: 90;
@@ -719,16 +776,16 @@ footer {
     }
 
     .nav-arrow {
-        width: 40px;
+        width: 35px;
         /* Smaller arrows */
-        height: 40px;
-        font-size: 1.2rem;
+        height: 35px;
+        font-size: 1.1rem;
     }
 
     .indicator-dot {
-        width: 8px;
+        width: 7px;
         /* Smaller dots */
-        height: 8px;
+        height: 7px;
     }
 
     /* Mobile nav adjustments */
@@ -744,14 +801,49 @@ footer {
         z-index: 100;
     }
 
+    /* Adjust nav and logo for mobile */
+    .nav-logo {
+        font-size: 1.3rem;
+    }
+
+    /* Theme toggle adjustment */
+    #theme-toggle {
+        margin-left: 1rem;
+    }
+
     /* Skill bubbles adjustments */
     #skills ul {
-        gap: 0.8rem;
+        gap: 0.7rem;
+        width: 100%;
+        padding: 0 0.5rem;
     }
 
     #skills li {
-        padding: 0.6rem 1.2rem;
-        font-size: 1rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    /* Filter buttons adjustments */
+    .filter-container {
+        width: 100%;
+        padding: 0 0.5rem;
+    }
+
+    .filter-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    /* Fix for footer on mobile */
+    footer {
+        width: 100vw;
+        padding: 1.2rem 0.5rem;
+    }
+
+    /* Fix card hover effect on mobile */
+    .card:hover {
+        transform: none;
+        /* Disable hover effect on mobile */
     }
 }
 
@@ -782,5 +874,60 @@ footer {
 @supports (-webkit-touch-callout: none) {
     section {
         min-height: -webkit-fill-available;
+    }
+}
+
+/* Extra small phone adjustments */
+@media (max-width: 360px) {
+    .nav-logo {
+        font-size: 1.1rem;
+    }
+
+    .home-welcome h1 {
+        font-size: 1.8rem;
+    }
+
+    .section-title {
+        font-size: 1.6rem;
+    }
+
+    section {
+        padding: 1.2rem 0.6rem;
+    }
+
+    .card {
+        padding: 1.2rem;
+    }
+
+    .home-about .about-text h2 {
+        font-size: 1.8rem;
+    }
+}
+
+/* Fix for iOS Safari 100vh issue */
+@supports (-webkit-touch-callout: none) {
+
+    html,
+    body,
+    section {
+        min-height: -webkit-fill-available;
+    }
+}
+
+/* Fix content on very tall phones */
+@media (min-height: 800px) and (max-width: 768px) {
+    .card-container {
+        max-height: 60vh;
+    }
+}
+
+/* Fix for landscape mode */
+@media (max-height: 500px) and (orientation: landscape) {
+    section {
+        min-height: 120vh;
+    }
+
+    .card-container {
+        max-height: 45vh;
     }
 }

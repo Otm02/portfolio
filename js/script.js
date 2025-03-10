@@ -113,8 +113,14 @@ document.addEventListener('DOMContentLoaded', function () {
         if (index < 0 || index >= sections.length || isScrolling) return;
         isScrolling = true;
         sections[currentSection].classList.remove('visible');
+
+        // Force scroll to top for mobile
+        if (window.innerWidth <= 768) {
+            window.scrollTo(0, 0);
+        }
+
         setTimeout(() => {
-            sections[index].scrollIntoView({ behavior: 'smooth' });
+            sections[index].scrollIntoView({ behavior: 'smooth', block: 'start' });
             setTimeout(() => {
                 sections[index].classList.add('visible');
                 currentSection = index;
@@ -299,6 +305,20 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
+        // Prevent page zoom on double tap for iOS
+        document.addEventListener('touchend', function (e) {
+            // Prevent default if the user is tapping a button or link
+            const target = e.target;
+            const isButton = target.tagName === 'BUTTON' ||
+                target.tagName === 'A' ||
+                target.closest('button') ||
+                target.closest('a');
+
+            if (isButton) {
+                e.preventDefault();
+            }
+        }, false);
+
         // Add touch swipe navigation for mobile
         let touchStartY = 0;
         let touchEndY = 0;
@@ -348,5 +368,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
         }, { passive: false });
+
+        // Force resize on orientation change
+        window.addEventListener('orientationchange', function () {
+            setTimeout(() => {
+                // Force redraw
+                document.body.style.display = 'none';
+                document.body.offsetHeight; // Trigger a reflow
+                document.body.style.display = '';
+
+                // Scroll to current section
+                sections[currentSection].scrollIntoView({ behavior: 'auto' });
+            }, 300);
+        });
     }
 });
