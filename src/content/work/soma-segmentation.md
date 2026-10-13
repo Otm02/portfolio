@@ -4,7 +4,7 @@ cardTitle: 3D neuron soma segmentation platform
 context: McGill capstone, team of 4 · Sep 2024 – present (research ongoing)
 summary: >-
   An open-source Vaa3D plugin that turns one marker per soma into a 3D
-  segmentation, a shape model and synthetic training data. I built the
+  segmentation, a shape model and synthetic training data. My part: the
   segmentation module and its evaluation.
 metric:
   value: 1 marker
