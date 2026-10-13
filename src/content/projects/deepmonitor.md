@@ -1,9 +1,9 @@
 ---
 title: DeepMonitor
-date: 2026-07
-dateLabel: '[CONFIRM start] – present'
+date: 2025-09
+dateLabel: Since Sep 2025
 role: Co-founder
-status: Early prototype, breadboard testing
+status: Early prototype (breadboard testing), on hold
 summary: >-
   Vibration sensing for food-grade industrial machinery. A battery-powered
   ESP32 sensor extracts FFT and statistical features and runs a small

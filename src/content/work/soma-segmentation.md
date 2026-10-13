@@ -8,7 +8,7 @@ summary: >-
   segmentation module and its evaluation.
 metric:
   value: 1 marker
-  label: per soma (center and radius) to get its full 3D binary mask [CONFIRM metric]
+  label: per soma (center and radius) to get its full 3D binary mask
 order: 5
 stack: [C++, Vaa3D, TeraFly]
 links:

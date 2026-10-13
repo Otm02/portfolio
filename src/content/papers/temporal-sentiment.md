@@ -5,7 +5,7 @@ summary: >-
   How the age of training data affects sentiment-model performance: DistilBERT
   models fine-tuned on individual months, years and multi-year groups, then
   tested across periods.
-contribution: '[CONFIRM: what did you do on this paper?]'
+contribution: Implemented data extraction, training and fine-tuning.
 links:
   paper: https://github.com/Otm02/temporal-sentiment-amazon23/blob/main/sentiment-analysis-temporal-paper.pdf
   code: https://github.com/Otm02/temporal-sentiment-amazon23
