@@ -74,7 +74,7 @@ const experience = defineCollection({
 
 /** Case studies at /work/[slug]. Body holds the narrative sections. */
 const work = defineCollection({
-  loader: glob({ pattern: '*.{md,mdx}', base: './src/content/work' }),
+  loader: glob({ pattern: '*.md', base: './src/content/work' }),
   schema: z.object({
     title: z.string(),
     cardTitle: z.string(),
