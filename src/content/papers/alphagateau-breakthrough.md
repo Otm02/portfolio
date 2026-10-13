@@ -1,10 +1,7 @@
 ---
 title: 'AlphaGateau for Breakthrough: A piece of cake?'
 date: 2026-05
-summary: >-
-  AlphaZero-style self-play with Gumbel MCTS in a custom JAX environment,
-  comparing a graph-attention (AlphaGateau-style) encoder with a residual CNN on
-  Breakthrough, including 5×5 → 8×8 transfer.
+summary: AlphaZero-style self-play in JAX, comparing a graph-attention encoder with a CNN on Breakthrough.
 keyResult: >-
   The CNN reaches a 100% greedy-evaluation win rate by iteration 40 while the
   GNN plateaus near 42%. 5×5 pretraining lifts early 8×8 performance from 17%

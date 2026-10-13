@@ -1,10 +1,7 @@
 ---
 title: 'PolarBench: Multi-View Graph Construction and Benchmarking for Stance Detection in Decentralized Social Networks'
 date: 2026-04
-summary: >-
-  A stance-detection benchmark over three datasets (PolitiSky24,
-  Fediverse-Gaza, Climate-COP28) with typed Endorse, Conflict and Semantic graph
-  views, and an audit of LLM annotators against a human gold standard.
+summary: A multi-view graph benchmark for stance detection in decentralized social networks.
 keyResult: >-
   GCN on the Endorse view reaches Macro-F1 0.44, against a 0.177
   majority-class baseline and a 0.54 inter-annotator ceiling.

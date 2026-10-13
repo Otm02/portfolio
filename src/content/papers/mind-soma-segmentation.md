@@ -3,10 +3,7 @@ title: A Platform for the Semi-automatic Segmentation, Characteristic Shape Anal
 date: 2024-09
 dateLabel: Sep 2024 – present
 ongoing: true
-summary: >-
-  An open-source Vaa3D platform that segments neuronal somas in 3D light-sheet
-  microscopy images, models their shape, and simulates synthetic ground truth
-  for training deep networks.
+summary: A Vaa3D platform to segment, model and simulate neuronal somas in 3D light-sheet brain images.
 contribution: >-
   Built the soma segmentation module (segmentation modes, thresholding, median
   filtering, marker constraints) and, since the capstone, a Dice-based

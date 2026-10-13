@@ -1,10 +1,7 @@
 ---
 title: Optimizing Global River Flood Forecasting via Meta-Modeling
 date: 2025-12
-summary: >-
-  A meta-model that predicts when fine-tuning a global LSTM flood model pays off
-  for a river basin: Caravan dataset, 217 features, 159 fine-tuned basins, and
-  region-based splits to avoid spatial leakage.
+summary: A meta-model that predicts when fine-tuning a global LSTM flood model pays off for a river basin.
 keyResult: >-
   Basin attributes were weak predictors of fine-tuning gain: the global model's
   own performance was the first feature selected on every split, and test R²

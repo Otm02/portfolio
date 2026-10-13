@@ -1,10 +1,7 @@
 ---
 title: Energy Characterization of V-JEPA2 on the SOCS Teaching Cluster
 date: 2026-04
-summary: >-
-  Training-time energy and performance study of the vit_huge V-JEPA2 video
-  Transformer on one RTX 5000 Ada GPU: CodeCarbon end-to-end GPU energy plus
-  CUDA-synchronized per-phase timing with 500 ms NVML telemetry.
+summary: Where the training energy of a ViT-Huge video Transformer goes on one GPU, phase by phase.
 keyResult: >-
   GPU-centric but not GPU-saturating. Batch size 1 → 2 gives +42.4% throughput
   and −26.8% GPU energy per 1,000 samples.

@@ -1,10 +1,7 @@
 ---
 title: "Quantifying Temporal Change in Sentiment Analysis: A Study on the Amazon Reviews'23 Dataset"
 date: 2025-03
-summary: >-
-  How the age of training data affects sentiment-model performance: DistilBERT
-  models fine-tuned on individual months, years and multi-year groups, then
-  tested across periods.
+summary: How the age of training data affects sentiment-model performance on Amazon reviews.
 contribution: Implemented data extraction, training and fine-tuning.
 links:
   paper: https://github.com/Otm02/temporal-sentiment-amazon23/blob/main/sentiment-analysis-temporal-paper.pdf
