@@ -1,51 +1,48 @@
 ---
 title: LLM agents in daily use at a food plant
 cardTitle: LLM agents in production at a food plant
-context: Russet House (food processing) · Software Developer, part-time · [CONFIRM start date] – present
+context: Russet House (food processing) · Software Developer, part-time · Jan 2026 – present
 summary: >-
-  Three LLM agents that plant staff use every day, over ERP, SharePoint and
-  Teams data: multi-agent sales reporting, a maintenance-document assistant and
-  a meeting follow-up agent.
+  Three LLM agents plant staff use every day: sales reporting over ERP data, a
+  maintenance-document assistant over SharePoint, and a meetings agent over
+  Teams.
 metric:
   value: 3 agents
-  label: in daily use over ERP, SharePoint and Teams data [CONFIRM a stronger number]
+  label: in daily use, built since January 2026
 order: 2
 confidentiality: >-
-  Internal company system, described in general terms. No names, screenshots,
-  data or code.
-stack: [Microsoft Graph, SharePoint, Teams, '[CONFIRM LLM provider / framework]']
+  Internal company system, described in general terms. No names, usage numbers,
+  screenshots, data or code.
+stack: [Copilot Studio, Power Platform AI Hub, Power Automate, SQL Server, SharePoint, Teams, Microsoft Graph]
 experience: russet-software-developer
 related: [line-speed-advisory]
 ---
 
 ## Problem
 
-A food-processing plant keeps its sales data in an ERP, its maintenance documents in SharePoint and its meetings in Teams. [CONFIRM: what took people time before. For example: who assembled sales reports and how often; how technicians found the right maintenance document; what happened to meeting action items.] Each agent targets one of those jobs.
+Two everyday questions were slow to answer. Finding the right maintenance document meant searching SharePoint by hand among thousands of documents. Sales questions meant reading summaries in Power BI and pulling data from the ERP, with no reliable way to aggregate it exactly as asked.
 
 ## Constraints
 
-- **Real permissions.** The agents read company data through Microsoft Graph, so every call runs under scoped permissions. [CONFIRM: delegated or application permissions?]
-- **Daily use.** Staff rely on the agents every day, so a failure is noticed the same day.
-- [CONFIRM: any constraint on which LLM provider or where data may go.]
+- **Inside the company's Microsoft stack.** Agents are built in Copilot Studio. Automations in Power Platform's AI Hub prompt the agents alongside Power Automate flows.
+- **Company data.** The agents work over the ERP's data in SQL Server and over SharePoint and Teams.
+- **Daily use.** Staff rely on the agents every day.
 
 ## What I built
 
-- **Multi-agent sales reporting** over ERP data. [CONFIRM: how the work is split between agents, e.g. one queries the ERP, one checks numbers, one writes the report; who receives it and when.]
-- **A maintenance-document assistant** over SharePoint. [CONFIRM: how it finds documents (search, embeddings/RAG) and what it returns.]
-- **A meeting follow-up agent** over Teams. [CONFIRM: what it produces, e.g. action items, emails, tasks.]
+- **Sales reporting as a team of agents.** A sales agent orchestrates two query agents: a broad one for overall figures and a narrow one for specifics. Both work through a large set of SQL Server stored procedures over the ERP's data.
+- **A maintenance-document assistant** that searches the plant's maintenance documents in SharePoint and answers from them.
+- **A meetings agent** that answers questions about meetings and their action items.
 
 ## Results
 
-- All three agents are in daily use. [CONFIRM: any number you can share: daily users, reports per week, hours saved, questions answered.]
+All three agents are in daily use. I don't publish usage numbers for internal systems.
 
 ## What went wrong and how I fixed it
 
-I root-caused and fixed three production failures:
-
-- **Microsoft Graph permission errors.** [CONFIRM: what triggered them and the fix.]
-- **An ID-length overflow.** [CONFIRM: which ID overflowed which field, and the fix.]
-- **A data-corruption bug.** [CONFIRM: what was corrupted, the cause, and the fix.]
+I root-caused and fixed the agents' production failures myself, from permission errors to a data-corruption bug.
 
 ## What I'd do next
 
-[CONFIRM or replace. Proposals: a fixed set of real questions with expected answers, re-run on every change; logging of each agent's tool calls to speed up the next root cause.]
+- Keep a fixed set of real questions with known answers, and re-run it whenever a stored procedure or prompt changes.
+- Log each agent's tool calls, so the next production issue is faster to trace.

@@ -23,6 +23,6 @@ highlights:
     Integrated a wastewater flow meter (Modbus/OPC tags, SQL Server logging every
     5 minutes, live maintenance page). Maintain Power BI and Power Automate
     reporting.
-stack: [Ignition SCADA (Jython), SQL Server, Microsoft Graph, Modbus/OPC, Power BI, Power Automate]
+stack: [Ignition SCADA (Jython), SQL Server, Copilot Studio, Power Automate, Power BI, Modbus/OPC]
 caseStudies: [llm-agents-food-plant, line-speed-advisory]
 ---
