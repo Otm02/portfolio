@@ -13,6 +13,15 @@ contribution: >-
 links:
   pdf: /papers/alphagateau-breakthrough.pdf
   code: https://github.com/Otm02/alphagateau-breakthrough-v2
+figure:
+  src: ../../assets/research/alphagateau-scratch.png
+  alt: >-
+    Two line charts over 40 training iterations on the 8×8 board. Left: win
+    rate against a greedy evaluator; the CNN climbs to 1.0 while both GNN runs
+    stay below 0.7. Right: policy loss for the same three runs.
+  caption: >-
+    Training from scratch on 8×8: the CNN overtakes the GNN at iteration 15
+    and reaches a 1.00 greedy win rate by iteration 40 (Fig. 2 of the paper).
 tags: [RL, ML]
 inProjects: true
 caseStudy: alphagateau-breakthrough

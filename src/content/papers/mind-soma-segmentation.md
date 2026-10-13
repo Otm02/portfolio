@@ -11,6 +11,13 @@ contribution: >-
 links:
   pdf: /papers/mind-soma-segmentation.pdf
   code: https://github.com/ImagiNeuron
+figure:
+  src: ../../assets/research/mind-segmentation.png
+  alt: >-
+    Dark light-sheet microscopy image of brain tissue. Red outlines trace the
+    boundaries of about a dozen segmented somas; dimmer somas are left unmarked.
+  caption: >-
+    Segmented somas at 9× resolution, outlined in red (Fig. 4a of the paper).
 tags: [ML, Systems]
 inProjects: true
 caseStudy: soma-segmentation

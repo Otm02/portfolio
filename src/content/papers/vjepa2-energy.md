@@ -11,6 +11,16 @@ contribution: >-
 links:
   pdf: /papers/vjepa2-energy.pdf
   code: https://github.com/Otm02/vjepa2-energy-char
+figure:
+  src: ../../assets/research/vjepa2-batch-size.png
+  alt: >-
+    Two line charts for physical batch sizes 1 and 2 in three measurement
+    modes. Left: throughput rises from about 1.9 to 2.7 samples per second.
+    Right: total GPU energy per run rises slightly.
+  caption: >-
+    Batch size 1 → 2: each capped run uses slightly more GPU energy but
+    processes 42% more samples, so energy per 1,000 samples falls 26.8%
+    (Fig. 6a of the report).
 tags: [ML, Systems]
 inProjects: true
 caseStudy: vjepa2-energy
