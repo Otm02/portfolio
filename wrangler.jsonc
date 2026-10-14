@@ -4,6 +4,9 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "athmanebenarous",
   "compatibility_date": "2026-10-01",
+  // <name>.<account>.workers.dev stays on, and branch builds get preview URLs.
+  "workers_dev": true,
+  "preview_urls": true,
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page",
