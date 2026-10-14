@@ -27,7 +27,12 @@ const siteData = await getSiteData();
 const site = Astro.site!;
 const canonical = new URL(Astro.url.pathname.replace(/\.html$/, '').replace(/\/index$/, '/'), site).href;
 const ogUrl = new URL(og, site).href;
-const beacon = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
+// Cloudflare Web Analytics site token. It isn't secret (it ships in every page), so it lives here;
+// PUBLIC_CF_BEACON_TOKEN overrides it, and a pasted snippet works too. Production builds only.
+const ANALYTICS_TOKEN = '4cb5fd94ebbd45a189280c2bd92ccfba';
+const beacon = import.meta.env.PROD
+  ? (import.meta.env.PUBLIC_CF_BEACON_TOKEN || ANALYTICS_TOKEN).match(/[0-9a-f]{32}/)?.[0]
+  : undefined;
 ---
 
 <!doctype html>
