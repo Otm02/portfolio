@@ -34,6 +34,8 @@ Operators set the speed of the potato processing line during each shift. The goa
 - **Operator feedback** through a chat interface: operators accept, modify or refuse each proposal, and that feedback flows back into the system.
 - **One aggregated recommendation** for the one input speed operators can control.
 
+<!-- diagram: advisory-loop | The system proposes; the operator decides. Every response feeds back into the system. -->
+
 ## Results
 
 Operators use it during shifts. I don't publish operating numbers for internal systems.

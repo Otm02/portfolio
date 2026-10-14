@@ -34,6 +34,8 @@ Two everyday questions were slow to answer. Finding the right maintenance docume
 - **A maintenance-document assistant** that searches the plant's maintenance documents in SharePoint and answers from them.
 - **A meetings agent** that answers questions about meetings and their action items.
 
+<!-- diagram: sales-agents | The sales agent routes each question to a broad or a narrow query agent. Both work through stored procedures over the ERP's data. -->
+
 ## Results
 
 All three agents are in daily use. I don't publish usage numbers for internal systems.

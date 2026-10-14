@@ -44,7 +44,7 @@ I compared an L1-regularized logistic regression (scikit-learn) with the physica
 
 <!-- diagram: overlapping-windows | Consecutive 30-day windows share 29 days. A random split leaks neighbours across train and test; a segment-grouped split does not. -->
 
-<!-- diagram: detector-pipeline | 93 features → invariance screen → 34 → L1 logistic regression → healthy-only threshold (exact Poisson bound) → 7-day persistence → dispatch. -->
+<!-- diagram: detector-pipeline | The selected detector, from features to a dispatch. Every threshold comes from healthy data only. -->
 
 ## Results
 

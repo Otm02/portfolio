@@ -39,6 +39,8 @@ My part was the segmentation module:
 - **A histogram-based 3D median filter** (default window 3) that removes salt-and-pepper noise before segmentation without blurring soma edges.
 - **Per-soma override.** Each soma's threshold is saved in its marker; editing it and re-running re-segments only that soma.
 
+<!-- diagram: soma-pipeline | The default path from one marker to a 3D mask. Global Otsu and iterative thresholding are alternatives to the local threshold. -->
+
 Since the capstone, I built a Dice-based evaluation against hand-labelled gold standards. The rest of the platform (PCA shape analysis, the probabilistic shape model and the simulation pipeline) was built by teammates.
 
 ## Results
