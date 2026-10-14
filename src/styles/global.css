@@ -326,6 +326,11 @@ dialog.cmdk::backdrop { background: rgba(10, 10, 12, .35); backdrop-filter: blur
   .paper { scroll-margin-top: 7.5rem; }
 }
 @media (min-width: 52.01rem) { .mlinks { display: none; } }
+/* Small phones: fit all five section links without sideways scrolling */
+@media (max-width: 30rem) {
+  .mlinks ul { justify-content: space-between; gap: 0; padding-inline: calc(var(--gutter) - 0.4rem); }
+  .mlinks a { padding: 0.5rem 0.4rem; font-size: 0.8125rem; }
+}
 @media (max-width: 40rem) {
   .hero { grid-template-columns: minmax(0, 1fr); }
   .hero .portrait-wrap { order: -1; margin: 0 0.75rem 0.75rem 0; justify-self: start; }
