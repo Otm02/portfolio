@@ -10,7 +10,7 @@ contribution: Equal contributor in a team of three, across every part of the pro
 abstractLabel: Summary
 links:
   pdf: /papers/flood-meta-modeling.pdf
-  code: https://github.com/Farooq-azam-khan/comp-685-final-project
+  code: https://github.com/Otm02/comp-685-final-project
 tags: [ML]
 inProjects: true
 ---

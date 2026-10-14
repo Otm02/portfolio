@@ -15,9 +15,7 @@ highlights:
     live SCADA data (recursive least squares, EWMA percentile bands, operator
     feedback). Operators use it during shifts through a chat interface.
   - >-
-    Built and run LLM agents used daily over ERP, SharePoint and Teams data:
-    multi-agent sales reporting, a maintenance-document assistant and a meeting
-    follow-up agent.
+    Built and run LLM agents used daily over ERP, SharePoint and Teams data.
   - >-
     Integrated a wastewater flow meter (Modbus/OPC tags, SQL Server logging every
     5 minutes, live maintenance page). Maintain Power BI and Power Automate

@@ -67,13 +67,14 @@ function overlappingWindows() {
 </svg>`;
 }
 
-const agents = () => `<div class="dg-tree" role="img" aria-label="The sales agent sends each question to a broad or a narrow query agent; both call SQL Server stored procedures over the ERP's data.">
-  <div class="dg-node dg-node-acc"><b>Sales agent</b><span>orchestrates</span></div>
+const agentIntegrations = () => `<div class="dg-tree" role="img" aria-label="Plant staff ask the LLM agents in plain language. The agents, built in Copilot Studio with AI Hub and Power Automate automations, answer from ERP data in SQL Server through stored procedures, documents in SharePoint, and meetings in Teams.">
+  <div class="dg-node"><b>Plant staff</b><span>ask in plain language</span></div>
+  <div class="dg-node dg-node-acc"><b>LLM agents</b><span>Copilot Studio, AI Hub and Power Automate</span></div>
   <div class="dg-branch">
-    <div class="dg-node"><b>Broad query agent</b><span>overall figures</span></div>
-    <div class="dg-node"><b>Narrow query agent</b><span>specifics</span></div>
+    <div class="dg-node"><b>ERP data</b><span>SQL Server stored procedures</span></div>
+    <div class="dg-node"><b>Documents</b><span>SharePoint</span></div>
+    <div class="dg-node"><b>Meetings</b><span>Teams</span></div>
   </div>
-  <div class="dg-node dg-node-base"><b>SQL Server stored procedures</b><span>over the ERP's data</span></div>
 </div>`;
 
 const DIAGRAMS = {
@@ -88,7 +89,7 @@ const DIAGRAMS = {
       ['7-day persistence rule'],
       ['Dispatch', 'counted per dispatch, not per episode'],
     ]),
-  'sales-agents': agents,
+  'agent-integrations': agentIntegrations,
   'advisory-loop': () =>
     steps(
       [

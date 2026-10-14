@@ -3,12 +3,11 @@ title: LLM agents in daily use at a food plant
 cardTitle: LLM agents in production at a food plant
 context: Russet House (food processing) · Software Developer, part-time · Jan 2026 – present
 summary: >-
-  Five LLM agents plant staff use every day: three for sales reporting over ERP
-  data, a maintenance-document assistant over SharePoint, and a meetings agent
-  over Teams.
+  LLM agents that plant staff use every day to get answers from the company's
+  ERP data, SharePoint documents and Teams meetings, built on Copilot Studio.
 metric:
-  value: 5 agents
-  label: in daily use across sales, maintenance and meetings, built since January 2026
+  value: Daily use
+  label: by plant staff, in production since January 2026
 order: 2
 confidentiality: >-
   Internal company system, described in general terms. No names, usage numbers,
@@ -20,7 +19,7 @@ related: [line-speed-advisory]
 
 ## Problem
 
-Two everyday questions were slow to answer. Finding the right maintenance document meant searching SharePoint by hand among thousands of documents. Sales questions meant reading summaries in Power BI and pulling data from the ERP, with no reliable way to aggregate it exactly as asked.
+Everyday questions were slow to answer. Finding the right document meant searching SharePoint by hand, and questions about sales meant combining Power BI summaries with ERP data, with no reliable way to aggregate it exactly as asked.
 
 ## Constraints
 
@@ -30,19 +29,23 @@ Two everyday questions were slow to answer. Finding the right maintenance docume
 
 ## What I built
 
-- **Sales reporting as a team of agents.** A sales agent orchestrates two query agents: a broad one for overall figures and a narrow one for specifics. Both work through a large set of SQL Server stored procedures over the ERP's data.
-- **A maintenance-document assistant** that searches the plant's maintenance documents in SharePoint and answers from them.
-- **A meetings agent** that answers questions about meetings and their action items.
+I deployed LLM agents in Copilot Studio that staff question in plain language. The agents connect to:
 
-<!-- diagram: sales-agents | The sales agent routes each question to a broad or a narrow query agent. Both work through stored procedures over the ERP's data. -->
+- **ERP data in SQL Server,** through stored procedures.
+- **Documents in SharePoint.**
+- **Meetings in Teams.**
+
+Automations built with AI Hub and Power Automate also prompt the agents.
+
+<!-- diagram: agent-integrations | Staff ask in plain language; the agents answer from company data through stored procedures and Microsoft 365. -->
 
 ## Results
 
-All five agents are in daily use. I don't publish usage numbers for internal systems.
+The agents are in daily use. I don't publish usage numbers for internal systems.
 
 ## What went wrong and how I fixed it
 
-I root-caused and fixed the agents' production failures myself, from permission errors to a data-corruption bug.
+I root-caused and fixed the agents' production failures, from Microsoft Graph permission errors to a data-corruption bug.
 
 ## What I'd do next
 

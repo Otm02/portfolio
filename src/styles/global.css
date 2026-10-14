@@ -259,20 +259,19 @@ dialog.cmdk::backdrop { background: rgba(10, 10, 12, .35); backdrop-filter: blur
 .dg-loop { display: flex; align-items: center; gap: 0.5rem; margin: 1rem 0 0; padding-top: 0.9rem; border-top: 1px dashed var(--line); font-size: 0.875rem; color: var(--accent); font-weight: 550; }
 .dg-loop svg { width: 1rem; height: 1rem; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .dg-tree { display: grid; gap: 1.5rem; justify-items: center; text-align: center; }
-.dg-branch { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; width: 100%; position: relative; }
+.dg-branch { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; width: 100%; position: relative; }
 .dg-node { position: relative; display: flex; flex-direction: column; gap: 0.1rem; padding: 0.7rem 0.9rem; border: 1px solid var(--line); border-radius: 0.8rem; background: var(--surface); min-width: 0; width: 100%; max-width: 20rem; justify-self: center; }
+.dg-branch .dg-node { padding: 0.65rem 0.6rem; }
 .dg-node b { font-weight: 600; font-size: 0.9375rem; line-height: 1.3; }
-.dg-node span { font-size: 0.8125rem; color: var(--muted); }
+.dg-node span { font-size: 0.8125rem; color: var(--muted); line-height: 1.35; }
 .dg-node-acc { border-color: color-mix(in srgb, var(--accent) 50%, var(--line)); background: var(--tint); }
 .dg-node-acc b { color: var(--accent); }
-.dg-node-base { max-width: none; }
-/* Tree connectors: stem down from the root, a bar across the branches, stubs into each node */
-.dg-tree > .dg-node:first-child::after, .dg-branch .dg-node::after, .dg-branch .dg-node::before, .dg-node-base::before { content: ""; position: absolute; left: 50%; width: 1px; height: 0.75rem; background: var(--muted); opacity: 0.5; }
-.dg-tree > .dg-node:first-child::after, .dg-branch .dg-node::after { top: 100%; }
-.dg-branch .dg-node::before, .dg-node-base::before { bottom: 100%; }
-.dg-branch::before, .dg-branch::after { content: ""; position: absolute; left: calc((100% - 1rem) / 4); right: calc((100% - 1rem) / 4); height: 1px; background: var(--muted); opacity: 0.5; }
-.dg-branch::before { top: -0.75rem; }
-.dg-branch::after { bottom: -0.75rem; }
+/* Connectors: a stem between stacked nodes; into a branch, a stem, a bar across, and a stub into each node */
+.dg-tree > .dg-node + .dg-node::before, .dg-tree > .dg-node:has(+ .dg-branch)::after, .dg-branch > .dg-node::before, .dg-branch::before { content: ""; position: absolute; background: var(--muted); opacity: 0.5; }
+.dg-tree > .dg-node + .dg-node::before { left: 50%; bottom: 100%; width: 1px; height: 1.5rem; }
+.dg-tree > .dg-node:has(+ .dg-branch)::after { left: 50%; top: 100%; width: 1px; height: 0.75rem; }
+.dg-branch > .dg-node::before { left: 50%; bottom: 100%; width: 1px; height: 0.75rem; }
+.dg-branch::before { top: -0.75rem; left: calc((100% - 1.5rem) / 6); right: calc((100% - 1.5rem) / 6); height: 1px; }
 
 /* Research page */
 .intro { color: var(--muted); max-width: 60ch; margin: 0 0 2rem; }
@@ -344,6 +343,11 @@ dialog.cmdk::backdrop { background: rgba(10, 10, 12, .35); backdrop-filter: blur
   .pager { grid-template-columns: minmax(0, 1fr); }
   .pager .next { grid-column: auto; }
   .dg { padding: 1rem; }
+  .dg-branch { gap: 0.5rem; }
+  .dg-branch::before { left: calc((100% - 1rem) / 6); right: calc((100% - 1rem) / 6); }
+  .dg-branch .dg-node { padding: 0.55rem 0.3rem; }
+  .dg-branch .dg-node b { font-size: 0.8125rem; }
+  .dg-branch .dg-node span { font-size: 0.75rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
