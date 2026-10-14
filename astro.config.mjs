@@ -9,7 +9,8 @@ export default defineConfig({
   trailingSlash: 'never',
   build: { format: 'file' },
   integrations: [sitemap({ filter: (page) => !page.includes('/404') })],
-  markdown: { processor: satteri({ mdastPlugins: [diagrams] }) },
+  // No code blocks on the site; Shiki's inline styles would also conflict with the CSP.
+  markdown: { processor: satteri({ mdastPlugins: [diagrams] }), syntaxHighlight: false },
   security: {
     csp: {
       directives: [
