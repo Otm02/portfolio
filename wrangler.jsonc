@@ -7,6 +7,9 @@
   // <name>.<account>.workers.dev stays on, and branch builds get preview URLs.
   "workers_dev": true,
   "preview_urls": true,
+  // Required by `wrangler preview`, the command Workers Builds runs for non-production branches.
+  // Empty: previews reuse the assets and settings below.
+  "previews": {},
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page",
