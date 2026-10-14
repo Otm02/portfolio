@@ -47,8 +47,7 @@ const beacon = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
     </script>
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex" />}
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
     <meta name="author" content={profile.name} />
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#FCFCFC" media="(prefers-color-scheme: light)" />
