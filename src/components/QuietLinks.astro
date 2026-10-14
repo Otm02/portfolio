@@ -15,8 +15,7 @@ const { links, class: cls } = Astro.props;
     <div class:list={['quiet', cls]}>
       {links.map((l) => (
         <a href={l.href} aria-label={l.ariaLabel} rel={isExternal(l.href) ? 'noopener' : undefined}>
-          {l.label}
-          <Icon name={l.icon ?? (l.href.endsWith('.pdf') ? 'down' : 'ne')} />
+          {l.label}<Icon name={l.icon ?? (l.href.endsWith('.pdf') ? 'down' : 'ne')} />
         </a>
       ))}
     </div>

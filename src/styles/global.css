@@ -346,44 +346,72 @@ dialog.cmdk::backdrop { background: rgba(10, 10, 12, .35); backdrop-filter: blur
 }
 
 /* ---------- Print: the home page as a one-pager ---------- */
+.print-only { display: none; }
 @media print {
   :root, :root[data-theme="dark"] {
-    --bg: #fff; --surface: #fff; --raise: #fff; --ink: #000; --muted: #333; --line: #ccc;
+    --bg: #fff; --surface: #fff; --raise: #fff; --ink: #000; --muted: #3f3f46; --line: #d4d4d8;
     --accent: #B71C1C; --cta: #B71C1C; --tint: transparent; --shadow: none; color-scheme: light;
   }
-  @page { margin: 12mm 14mm; }
-  html { font-size: 9pt; }
-  body { background: #fff; line-height: 1.4; }
-  .spot, .topbar, .mlinks, .skip, .toast, dialog, .seal, .portrait-wrap, .filters, .toggle-more,
-  details.archive, .card-top, .actions .btn, [data-js], .back, .pager, footer.foot, .no-print { display: none !important; }
-  .wrap, .page { max-width: none; padding: 0; }
-  section { padding-block: 0.9rem 0; break-inside: auto; }
-  .hero { display: block; padding: 0 0 0.4rem; }
-  h1 { font-size: 2.6rem; margin: 0 0 0.4rem; letter-spacing: -0.04em; }
+  @page { size: letter; margin: 11mm 13mm; }
+  html { font-size: 7.6pt; }
+  body { background: #fff; line-height: 1.32; }
+  a { text-decoration: none; }
+  .print-only { display: inline; }
+  .spot, .topbar, .mlinks, .skip, .toast, dialog, .portrait-wrap, .filters, .toggle-more, details.archive,
+  .card-top, .actions .btn, .actions .seg, [data-js], .back, .pager, footer.foot, .desc, .item .quiet,
+  .note, .head p, .fig span, .live, [data-kind="paper"], #projects .org-line, .contact-card h2 + p,
+  .contact-card > .quiet { display: none !important; }
+  .lede { display: block !important; }
+  .wrap { max-width: none; padding: 0; }
+  /* Two columns: experience on the left; research and projects stacked on the right. The empty
+     1fr row absorbs the extra height of the experience column so the right column stays packed. */
+  main > .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto auto auto auto 1fr auto; column-gap: 7mm; align-items: start; }
+  .hero { grid-area: 1 / 1 / 2 / -1; }
+  #work { grid-area: 2 / 1 / 3 / -1; }
+  #experience { grid-area: 3 / 1 / 6 / 2; }
+  #research { grid-area: 3 / 2 / 4 / 3; }
+  #projects { grid-area: 4 / 2 / 5 / 3; }
+  #contact { grid-area: 6 / 1 / 7 / -1; }
+  section { padding: 0; margin-top: 3.2mm; }
+  .hero { display: block; margin: 0; padding: 0; }
+  h1 { font-size: 2.9rem; line-height: 1; margin: 0 0 1mm; letter-spacing: -0.04em; }
   .hero h1 span { display: inline; }
-  .pos { font-size: 1.15rem; margin-bottom: 0.3rem; max-width: none; }
-  .lede, .facts { margin-bottom: 0.4rem; }
-  .avail .live { display: none; }
-  .actions .quiet a::after, .print-url::after { content: " " attr(href); font-weight: 400; }
-  h2 { font-size: 1.25rem; }
-  .head { margin-bottom: 0.4rem; }
-  .cards { display: block; }
-  .card { display: block; padding: 0.35rem 0; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; break-inside: avoid; }
-  .card .desc { margin: 0.15rem 0 0; }
-  .fig { display: inline; border: 0; padding: 0; }
-  .fig b { font-size: 1rem; }
-  .fig span { font-size: 0.85rem; }
-  .item { padding: 0.35rem 0; break-inside: avoid; }
-  .item .quiet { margin-top: 0.15rem; }
-  .desc { margin-top: 0.15rem; font-size: 0.95rem; }
+  .pos { font-size: 1.35rem; margin: 0 0 0.6mm; max-width: none; }
+  .lede, .facts, .avail { margin: 0 0 0.4mm; font-size: 1rem; max-width: none; }
+  .avail { font-weight: 600; }
+  .actions { display: block; margin-top: 0.8mm; }
+  .actions .quiet { display: flex; gap: 0 5mm; }
+  .quiet a { min-height: 0; color: var(--ink); }
+  .quiet svg { display: none; }
+  .actions .quiet a::after { content: ": " attr(href); font-weight: 400; color: var(--muted); }
+  h2 { font-size: 1.3rem; letter-spacing: -0.01em; color: var(--accent); }
+  .head { margin: 0 0 1mm; padding-bottom: 0.6mm; border-bottom: 1px solid var(--line); }
+  .ttl, .card .ttl { font-size: 1rem; line-height: 1.3; }
+  .org-line, .card .org-line { font-size: 0.92rem; margin: 0; }
+  .when { font-size: 0.85rem; }
+  .cards { display: grid; grid-template-columns: 1fr 1fr; column-gap: 7mm; }
+  .card { display: block; padding: 0.7mm 0; border: 0; border-radius: 0; box-shadow: none; break-inside: avoid; }
+  .fig { display: block; margin: 0; padding: 0; border: 0; }
+  .fig b { font-size: 0.95rem; color: var(--accent); }
+  .list { border-top: 0; }
+  .item { padding: 0.55mm 0; border-bottom: 0; break-inside: avoid; }
+  .line { flex-wrap: nowrap; gap: 3mm; }
+  .line .ttl { flex: 1 1 auto; }
   .more { display: block; }
   .more > div { overflow: visible; }
-  .sub-head { margin: 0.8rem 0 0.3rem; }
-  .skills { grid-template-columns: repeat(4, 1fr); gap: 0.4rem; }
-  .skills div { padding: 0.35rem 0.5rem; }
-  .contact-card { border: 0; padding: 0; }
+  .sub-head { font-size: 1.05rem; margin: 2mm 0 0.6mm; }
+  .skills { display: block; }
+  .skills div { border: 0; padding: 0.3mm 0; background: none; }
+  .skills dt { display: inline; font-size: 0.92rem; }
+  .skills dt::after { content: ": "; }
+  .skills dd { display: inline; font-size: 0.92rem; color: var(--muted); }
+  .contact-card { border: 0; padding: 0; border-radius: 0; box-shadow: none; overflow: visible; }
   .contact-card::before { display: none; }
-  .email-addr { font-size: 1.2rem; }
+  .contact-card h2 { display: none; }
+  .email { display: inline-flex; margin: 0 5mm 0 0; }
+  .email-addr { font-size: 1rem; font-weight: 600; }
+  .contact-meta { display: inline-flex; margin: 0; font-size: 1rem; gap: 0 5mm; }
+  #contact { border-top: 1px solid var(--line); padding-top: 1.5mm; }
   .item[hidden] { display: block !important; }
-  a { text-decoration: none; }
+  [data-kind="paper"][hidden] { display: none !important; }
 }

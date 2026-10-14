@@ -84,7 +84,7 @@ const jsonLd = {
   <div class="wrap">
     <section class="hero" id="home" aria-labelledby="name">
       <div>
-        <h1 id="name">{profile.name.split(' ').map((part) => <span>{part}</span>)}</h1>
+        <h1 id="name">{profile.name.split(' ').map((part, i) => <>{i > 0 && ' '}<span>{part}</span></>)}</h1>
         <p class="pos">{profile.positioning}</p>
         <p class="lede">{profile.lede}</p>
         <p class="avail"><span class="live" aria-hidden="true"></span>{avail}</p>
@@ -222,7 +222,7 @@ const jsonLd = {
       <ul class="list" id="project-list">
         {
           rows.map((r) => (
-            <li class="item" data-tags={r.tags.join(' ')}>
+            <li class="item" data-tags={r.tags.join(' ')} data-kind={r.sub === 'Research' ? 'paper' : undefined}>
               <div class="line">
                 <h3 class="ttl">{r.href ? <a class="stretch" href={r.href}>{r.title}</a> : r.title}</h3>
                 <span class="when">{r.when}</span>
@@ -266,6 +266,7 @@ const jsonLd = {
         <div class="contact-meta">
           <span><Icon name="pin" /> {profile.location}</span>
           <span>Last updated {updated}</span>
+          <span class="print-only">{Astro.site!.host}</span>
         </div>
       </div>
     </section>

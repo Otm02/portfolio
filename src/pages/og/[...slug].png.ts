@@ -35,8 +35,20 @@ const glyph = (slug: string) =>
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="${C.red}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${(GLYPHS[slug] ?? '').replace(/currentColor/g, C.red)}</svg>`,
   ).toString('base64')}`;
 
+/** Geist has no "→"; draw it as an inline arrow so satori doesn't show a missing glyph. */
+const arrow = (size: number, color: string) =>
+  h('img', { width: size, height: size }, undefined, {
+    src: `data:image/svg+xml;base64,${Buffer.from(
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16"/><path d="m14 6 6 6-6 6"/></svg>`,
+    ).toString('base64')}`,
+    width: size,
+    height: size,
+  });
+const withArrows = (text: string, size: number, color: string) =>
+  text.split('→').flatMap((part, i) => (i ? [arrow(size, color), part.trim()] : [part.trim()]));
+
 const footer = (name: string, portrait: string) =>
-  h('div', { alignItems: 'center', gap: 18, marginTop: 'auto' }, [
+  h('div', { position: 'absolute', left: 80, bottom: 56, alignItems: 'center', gap: 18 }, [
     h('img', { width: 56, height: 56, borderRadius: 14 }, undefined, { src: portrait, width: 56, height: 56 }),
     h('div', { flexDirection: 'column' }, [
       h('div', { fontSize: 26, fontWeight: 600, color: C.ink }, name),
@@ -67,13 +79,13 @@ export const GET: APIRoute = async ({ props }) => {
 
   if (props.kind === 'home') {
     tree = frame([
-      h('div', { flexDirection: 'column', padding: '80px 0 64px 80px', width: 760 }, [
+      h('div', { flexDirection: 'column', padding: '80px 0 64px 80px', width: 720, height: 630 }, [
         h('div', { flexDirection: 'column', fontSize: 124, fontWeight: 800, letterSpacing: -6, lineHeight: 0.92 }, [
           h('div', { color: C.ink }, first),
           h('div', { color: C.red }, last),
         ]),
-        h('div', { fontSize: 40, fontWeight: 600, color: C.ink, marginTop: 36, lineHeight: 1.2, letterSpacing: -0.8 }, profile.positioning),
-        h('div', { fontSize: 25, color: C.muted, marginTop: 'auto', lineHeight: 1.4 }, `${profile.status[0]} · ${profile.status[1]}`),
+        h('div', { fontSize: 40, fontWeight: 600, color: C.ink, marginTop: 36, lineHeight: 1.2, letterSpacing: -0.8, maxWidth: 600 }, profile.positioning),
+        h('div', { fontSize: 25, color: C.muted, marginTop: 40, lineHeight: 1.4, maxWidth: 620 }, `${profile.status[0]} · ${profile.status[1]}`),
       ]),
       h('div', { position: 'absolute', right: 96, top: 140, width: 300, height: 300, borderRadius: 40, background: C.red, transform: 'translate(20px, 20px) rotate(3deg)' }),
       h('img', { position: 'absolute', right: 96, top: 140, width: 300, height: 300, borderRadius: 40 }, undefined, { src: portrait, width: 300, height: 300 }),
@@ -100,7 +112,7 @@ export const GET: APIRoute = async ({ props }) => {
         ]),
         h('div', { fontSize: titleSize, fontWeight: 800, letterSpacing: -2.2, color: C.ink, marginTop: 34, lineHeight: 1.05, maxWidth: 1000 }, d.title),
         h('div', { alignItems: 'baseline', gap: 22, marginTop: 34 }, [
-          h('div', { fontSize: 50, fontWeight: 800, color: C.red, letterSpacing: -1.5 }, d.metric.value),
+          h('div', { fontSize: 50, fontWeight: 800, color: C.red, letterSpacing: -1.5, alignItems: 'center', gap: 12 }, withArrows(d.metric.value, 40, C.red)),
           h('div', { fontSize: 24, color: C.muted, maxWidth: 640, lineHeight: 1.3 }, d.metric.label),
         ]),
         footer(profile.name, portrait),
