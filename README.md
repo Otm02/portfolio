@@ -30,4 +30,4 @@ Every content file is checked against the schema in `src/content.config.ts` at b
 
 Case-study diagrams are written as `<!-- diagram: name | caption -->` in the Markdown and defined in `src/lib/diagrams.mjs`.
 
-The old site lives on the `legacy` branch.
+Maintenance notes (hosting, previews, rollback): [MAINTAINING.md](MAINTAINING.md). The old site lives on the `legacy` branch.
