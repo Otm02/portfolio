@@ -1,0 +1,50 @@
+---
+import { Image } from 'astro:assets';
+import portrait from '../assets/portrait.webp';
+import Icon from './Icon.astro';
+
+interface Props {
+  name: string;
+  home?: boolean;
+  /** Section id to mark as the current page on inner pages. */
+  current?: string;
+}
+const { name, home = false, current } = Astro.props;
+const nav = [
+  ['work', 'Work'],
+  ['experience', 'Experience'],
+  ['research', 'Research'],
+  ['projects', 'Projects'],
+  ['contact', 'Contact'],
+] as const;
+const href = (id: string) => (home ? `#${id}` : id === 'research' && current === 'research' ? '/research' : `/#${id}`);
+const state = (id: string): 'false' | 'page' | undefined => (home ? 'false' : id === current ? 'page' : undefined);
+const items = nav.map(([id, label]) => ({ id, label, href: href(id), current: state(id) }));
+---
+
+<header class:list={['topbar', { inner: !home }]}>
+  <div class="wrap">
+    <a class="brand" href={home ? '#main' : '/'}>
+      <Image src={portrait} alt="" width={56} height={56} loading="eager" />
+      {name}
+    </a>
+    <nav class="links" aria-label="Sections">
+      <ul>
+        {items.map((i) => <li><a href={i.href} data-spy={home ? i.id : undefined} aria-current={i.current}>{i.label}</a></li>)}
+      </ul>
+    </nav>
+    <div class="tools" data-js>
+      <button class="kbd-btn" type="button" data-cmdk aria-label="Search the site" aria-keyshortcuts="Control+K Meta+K /">
+        <Icon name="search" /><span>Search</span><kbd>⌘K</kbd>
+      </button>
+      <button class="icon-btn theme" type="button" aria-label="Toggle dark theme" aria-pressed="false">
+        <Icon name="sun" class="sun" /><Icon name="moon" class="moon" />
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="mlinks" aria-label="Sections">
+  <ul>
+    {items.map((i) => <li><a href={i.href} data-spy={home ? i.id : undefined} aria-current={i.current}>{i.label}</a></li>)}
+  </ul>
+</nav>

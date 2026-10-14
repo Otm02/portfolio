@@ -1,0 +1,13 @@
+---
+interface Props {
+  name: string;
+  lastUpdated: Date;
+}
+const { name, lastUpdated } = Astro.props;
+const updated = lastUpdated.toLocaleDateString('en-CA', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+---
+
+<footer class="foot wrap">
+  <span>© {lastUpdated.getUTCFullYear()} {name}</span>
+  <span>Last updated {updated}</span>
+</footer>

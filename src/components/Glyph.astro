@@ -1,0 +1,12 @@
+---
+import { GLYPHS } from '../lib/icons';
+
+interface Props {
+  slug: string;
+}
+const { slug } = Astro.props;
+---
+
+<span class="glyph" aria-hidden="true">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={GLYPHS[slug] ?? ''} />
+</span>

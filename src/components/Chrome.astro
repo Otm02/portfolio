@@ -1,0 +1,20 @@
+---
+/* Command palette, toast and the small JSON blob the site script reads. */
+import Icon from './Icon.astro';
+
+interface Props {
+  data: unknown;
+}
+const { data } = Astro.props;
+---
+
+<dialog class="cmdk" aria-label="Search the site">
+  <div class="cmdk-in">
+    <Icon name="search" />
+    <input type="text" id="cmdk-q" placeholder="Search work, papers, actions…" role="combobox" aria-expanded="true" aria-controls="cmdk-list" aria-autocomplete="list" aria-label="Search" autocomplete="off" spellcheck="false" />
+    <kbd>esc</kbd>
+  </div>
+  <ul class="cmdk-list" id="cmdk-list" role="listbox" aria-label="Results"></ul>
+</dialog>
+<div class="toast" role="status" aria-live="polite"><Icon name="check" /><span></span></div>
+<script type="application/json" id="site-data" set:html={JSON.stringify(data).replace(/</g, '\\u003c')} />
