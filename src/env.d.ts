@@ -1,5 +1,5 @@
 interface ImportMetaEnv {
-  /** Cloudflare Web Analytics token. Leave unset to build without analytics. */
+  /** Overrides the Cloudflare Web Analytics token in Base.astro. */
   readonly PUBLIC_CF_BEACON_TOKEN?: string;
 }
 
