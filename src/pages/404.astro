@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { getProfile } from '../lib/data';
+
+const profile = await getProfile();
+---
+
+<Base title={`Page not found · ${profile.name}`} description="This page doesn't exist." og="/og/home.png" ogAlt={profile.name} noindex>
+  <div class="page lost">
+    <p class="code">404</p>
+    <h1>This page doesn't exist.</h1>
+    <p>The site was rebuilt in 2026, so an old link may point somewhere that moved. Everything is reachable from the home page.</p>
+    <div class="actions">
+      <a class="btn primary" href="/"><Icon name="left" />Home</a>
+      <a class="btn" href="/#work">Selected work</a>
+      <a class="btn" href="/research">Research</a>
+      <a class="btn" href={profile.links.cvEn}><Icon name="down" />CV</a>
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,55 @@
+---
+import { Picture } from 'astro:assets';
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import QuietLinks from '../components/QuietLinks.astro';
+import { getPapers, getProfile, paperLinks } from '../lib/data';
+import { monthLabel } from '../lib/format';
+
+const [profile, papers] = await Promise.all([getProfile(), getPapers()]);
+const items = await Promise.all(papers.map(async (p) => ({ p, Abstract: (await render(p)).Content })));
+const description = `Papers and reports by ${profile.name}: soma segmentation, self-play RL, GPU energy profiling, stance detection, flood meta-modelling and temporal sentiment.`;
+---
+
+<Base title={`Research & papers · ${profile.name}`} description={description} og="/og/research.png" ogAlt={`Research and papers by ${profile.name}`} current="research">
+  <div class="page">
+    <a class="back" href="/#research"><Icon name="left" />Home</a>
+    <h1>Research &amp; papers</h1>
+    <p class="intro">Each entry has an abstract or summary, my own part of the work, and the PDF or code where I can share it.</p>
+    <ol class="papers">
+      {
+        items.map(({ p, Abstract }) => (
+          <li class="paper" id={p.id}>
+            <span class="when">{p.data.dateLabel ?? monthLabel(p.data.date)}</span>
+            <h2>{p.data.title}</h2>
+            <QuietLinks
+              links={[
+                ...paperLinks(p.data.links),
+                ...(p.data.caseStudy ? [{ label: 'Case study', href: `/work/${p.data.caseStudy.id}`, icon: 'arrow' as const }] : []),
+              ]}
+            />
+            {p.data.keyResult && (
+              <div class="key">
+                <h3 class="sr-only">Key result</h3>
+                <p>{p.data.keyResult}</p>
+              </div>
+            )}
+            <h3>What I did</h3>
+            <p>{p.data.contribution}</p>
+            {p.data.figure && (
+              <figure>
+                <Picture src={p.data.figure.src} alt={p.data.figure.alt} widths={[480, 720, 1080]} sizes="(max-width: 46rem) 100vw, 42rem" formats={['avif']} fallbackFormat="webp" />
+                <figcaption>{p.data.figure.caption}</figcaption>
+              </figure>
+            )}
+            <h3>{p.data.abstractLabel}</h3>
+            <div class="abstract">
+              <Abstract />
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</Base>

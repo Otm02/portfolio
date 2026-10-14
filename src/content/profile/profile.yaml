@@ -1,0 +1,97 @@
+# Hero, education, skills and contact. Update lastUpdated when you change content.
+name: Athmane Benarous
+positioning: I make machine learning hold up on real equipment.
+lede: >-
+  My work spans slow-leak detection for high-voltage circuit breakers, ML
+  pipelines over 600K+ materials, and LLM agents a food plant uses every day.
+status:
+  - M.Sc. Computer Science (Machine Learning), McGill, December 2026
+  - Open to ML, applied AI and software engineering roles
+  - Based in Montréal · Canada or US (TN-eligible) · In person or remote, open to relocation
+location: Montréal, QC
+email: athmane.b02@gmail.com
+links:
+  linkedin: https://www.linkedin.com/in/athmane-benarous
+  github: https://github.com/Otm02
+  cvEn: /cv.pdf
+  cvFr: /cv-fr.pdf
+lastUpdated: 2026-10-13
+
+education:
+  - degree: M.Sc. Computer Science (Machine Learning)
+    school: McGill University
+    start: 2025-09
+    end: 2026-12
+  - degree: B.Eng. Software Engineering (Co-op), Minor in Aerospace Engineering
+    school: McGill University
+    start: 2021-09
+    end: 2025-08
+
+coursework:
+  - Reinforcement Learning
+  - Applied Machine Learning
+  - Computer Vision
+  - Natural Language Processing
+  - Intelligent Software Systems
+  - Distributed Systems
+  - Parallel Computing
+  - Network Science
+  - Machine Learning Applied to Climate Change
+
+skills:
+  - group: ML
+    items:
+      - PyTorch
+      - JAX
+      - scikit-learn
+      - TensorFlow
+      - NumPy
+      - pandas
+      - GNNs
+      - Time series and anomaly detection
+      - Leakage-safe evaluation
+      - RL (MCTS)
+      - LLM agents
+  - group: Data and infrastructure
+    items:
+      - Azure ML
+      - AWS S3
+      - Slurm GPU clusters
+      - SQL Server
+      - PostgreSQL
+      - MongoDB
+      - Git
+  - group: Software
+    items:
+      - Python
+      - SQL
+      - C
+      - C++
+      - Java
+      - TypeScript
+      - JavaScript
+      - C#
+      - Bash
+      - React
+      - Next.js
+      - NestJS
+      - Spring
+  - group: Industrial
+    items:
+      - Ignition SCADA
+      - Modbus/OPC
+      - Power BI
+      - Power Automate
+      - Power Apps
+
+spokenLanguages:
+  - French
+  - English
+  - Arabic
+
+seo:
+  title: Athmane Benarous · Machine learning on real equipment
+  description: >-
+    M.Sc. Computer Science (Machine Learning), McGill, Dec 2026. Slow-leak
+    detection for high-voltage breakers, ML over 600K+ materials, LLM agents in
+    daily use.

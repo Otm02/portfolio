@@ -1,0 +1,23 @@
+---
+import Icon from './Icon.astro';
+import type { IconName } from '../lib/icons';
+import { isExternal } from '../lib/format';
+
+interface Props {
+  links: { label: string; href: string; icon?: IconName; ariaLabel?: string }[];
+  class?: string;
+}
+const { links, class: cls } = Astro.props;
+---
+
+{
+  links.length > 0 && (
+    <div class:list={['quiet', cls]}>
+      {links.map((l) => (
+        <a href={l.href} aria-label={l.ariaLabel} rel={isExternal(l.href) ? 'noopener' : undefined}>
+          {l.label}<Icon name={l.icon ?? (l.href.endsWith('.pdf') ? 'down' : 'ne')} />
+        </a>
+      ))}
+    </div>
+  )
+}

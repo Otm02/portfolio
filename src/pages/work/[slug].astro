@@ -1,0 +1,76 @@
+---
+import { getEntry, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import QuietLinks from '../../components/QuietLinks.astro';
+import { getProfile, getWork, type Work } from '../../lib/data';
+
+export async function getStaticPaths() {
+  const work = await getWork();
+  return work.map((w, i) => ({
+    params: { slug: w.id },
+    props: { entry: w, prev: work[i - 1], next: work[i + 1] },
+  }));
+}
+
+interface Props {
+  entry: Work;
+  prev?: Work;
+  next?: Work;
+}
+const { entry, prev, next } = Astro.props;
+const { data } = entry;
+const { Content } = await render(entry);
+const profile = await getProfile();
+const paper = data.paper ? await getEntry(data.paper) : undefined;
+const related = await Promise.all(data.related.map((r) => getEntry(r)));
+const relatedLinks = [
+  ...(paper ? [{ label: `Paper: ${paper.data.title}`, href: `/research#${paper.id}`, icon: 'arrow' as const }] : []),
+  ...related.filter((r) => !!r).map((r) => ({ label: `Case study: ${r.data.cardTitle}`, href: `/work/${r.id}`, icon: 'arrow' as const })),
+];
+const title = `${data.cardTitle} · ${profile.name}`;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: data.title,
+  description: data.summary,
+  author: { '@type': 'Person', name: profile.name, url: Astro.site!.href },
+  image: new URL(`/og/work/${entry.id}.png`, Astro.site).href,
+  mainEntityOfPage: new URL(`/work/${entry.id}`, Astro.site).href,
+};
+---
+
+<Base title={title} description={data.summary} og={`/og/work/${entry.id}.png`} ogAlt={`${data.cardTitle}: ${data.metric.value} ${data.metric.label}`} type="article" current="work" jsonLd={jsonLd}>
+  <article class="page">
+    <a class="back" href="/#work"><Icon name="left" />All work</a>
+    <p class="kicker">{data.context}</p>
+    <h1 class="cs-title">{data.title}</h1>
+    <p class="metric"><b>{data.metric.value}</b><span>{data.metric.label}</span></p>
+    {data.confidentiality && <p class="disclaimer">{data.confidentiality}</p>}
+    <div class="prose">
+      <Content />
+      <h2>Stack</h2>
+      <ul class="tags">{data.stack.map((s) => <li>{s}</li>)}</ul>
+      {
+        data.links.length > 0 && (
+          <>
+            <h2>Links</h2>
+            <QuietLinks links={data.links} />
+          </>
+        )
+      }
+      {
+        relatedLinks.length > 0 && (
+          <>
+            <h2>Related</h2>
+            <QuietLinks links={relatedLinks} />
+          </>
+        )
+      }
+    </div>
+    <nav class="pager" aria-label="More case studies">
+      {prev && <a class="prev" href={`/work/${prev.id}`}><small><Icon name="left" />Previous</small><b>{prev.data.cardTitle}</b></a>}
+      {next && <a class="next" href={`/work/${next.id}`}><small>Next<Icon name="arrow" /></small><b>{next.data.cardTitle}</b></a>}
+    </nav>
+  </article>
+</Base>
