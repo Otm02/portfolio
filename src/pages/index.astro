@@ -91,8 +91,8 @@ const jsonLd = {
         <p class="facts">{degree}<br />{where}</p>
         <div class="actions">
           <span class="seg">
-            <a class="btn primary" href={profile.links.cvEn} aria-label="CV in English (PDF)"><Icon name="down" />CV <span class="sub">EN</span></a>
-            <a class="btn" href={profile.links.cvFr} aria-label="CV in French (PDF)" hreflang="fr">FR</a>
+            <a class="btn primary" href={profile.links.cvEn}><Icon name="down" />CV <span class="sub">EN</span><span class="sr-only"> (English, PDF)</span></a>
+            <a class="btn" href={profile.links.cvFr} hreflang="fr">FR<span class="sr-only"> CV (French, PDF)</span></a>
           </span>
           <button class="btn" type="button" data-copy-email data-js><Icon name="copy" />Copy email</button>
           <QuietLinks links={socials} />
