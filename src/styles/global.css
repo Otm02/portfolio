@@ -137,7 +137,6 @@ h2 { font-size: clamp(1.5rem, 1.3rem + 0.7vw, 1.875rem); font-weight: 700; lette
 .line .ttl { flex: 1 1 22rem; }
 .item .quiet { margin-top: 0.7rem; }
 @media (hover: hover) and (pointer: fine) {
-  .list:hover > .item:not(:hover) { opacity: 0.55; }
   .item:hover .ttl { color: var(--accent); }
 }
 .more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s var(--ease); }
