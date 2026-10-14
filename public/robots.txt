@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://athmanebenarous.com/sitemap-index.xml
