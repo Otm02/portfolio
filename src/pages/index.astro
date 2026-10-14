@@ -1,0 +1,273 @@
+---
+import { Picture } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import Glyph from '../components/Glyph.astro';
+import QuietLinks from '../components/QuietLinks.astro';
+import portrait from '../assets/portrait.webp';
+import { getExperience, getPapers, getProfile, getProjects, getWork, paperLinks, type ProjectRow } from '../lib/data';
+import { monthLabel, shortContext, span } from '../lib/format';
+import { projectTags } from '../content.config';
+
+const [profile, work, experience, papers, projects] = await Promise.all([getProfile(), getWork(), getExperience(), getPapers(), getProjects()]);
+const workTitles = Object.fromEntries(work.map((w) => [w.id, w.data.cardTitle]));
+const featured = work.filter((w) => w.data.featured);
+const [degree, avail, where] = profile.status;
+const VISIBLE_JOBS = 4;
+const jobsMain = experience.slice(0, VISIBLE_JOBS);
+const jobsMore = experience.slice(VISIBLE_JOBS);
+
+const rows: ProjectRow[] = [
+  ...projects
+    .filter((p) => !p.data.archive)
+    .map((p) => ({
+      id: p.id,
+      title: p.data.title,
+      when: p.data.dateLabel ?? monthLabel(p.data.date),
+      sub: [p.data.context, p.data.role, p.data.note, p.data.status].filter(Boolean).join(' · '),
+      summary: p.data.summary,
+      tags: [...p.data.tags],
+      links: p.data.links,
+      ongoing: /present|since/i.test(p.data.dateLabel ?? ''),
+      date: p.data.date,
+    })),
+  ...papers
+    .filter((p) => p.data.inProjects)
+    .map((p) => ({
+      id: p.id,
+      title: p.data.title,
+      href: p.data.caseStudy ? `/work/${p.data.caseStudy.id}` : `/research#${p.id}`,
+      when: p.data.dateLabel ?? monthLabel(p.data.date),
+      sub: 'Research',
+      summary: p.data.summary,
+      tags: [...p.data.tags],
+      links: p.data.links.code ? [{ label: 'Code', href: p.data.links.code }] : [],
+      ongoing: p.data.ongoing,
+      date: p.data.date,
+    })),
+].sort((a, b) => Number(b.ongoing) - Number(a.ongoing) || b.date.localeCompare(a.date));
+const archive = projects.filter((p) => p.data.archive).sort((a, b) => b.data.date.localeCompare(a.data.date));
+const filters = ['All', ...projectTags];
+const socials = [
+  { label: 'LinkedIn', href: profile.links.linkedin },
+  { label: 'GitHub', href: profile.links.github },
+];
+const humanEmail = profile.email.replace('@', ' at ');
+const updated = profile.lastUpdated.toLocaleDateString('en-CA', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  mainEntity: {
+    '@type': 'Person',
+    name: profile.name,
+    url: Astro.site!.href,
+    image: new URL('/og/home.png', Astro.site).href,
+    description: profile.positioning,
+    address: { '@type': 'PostalAddress', addressLocality: 'Montréal', addressRegion: 'QC', addressCountry: 'CA' },
+    alumniOf: { '@type': 'CollegeOrUniversity', name: 'McGill University' },
+    knowsAbout: ['Machine learning', 'Time-series anomaly detection', 'LLM agents', 'Reinforcement learning', 'Software engineering'],
+    knowsLanguage: profile.spokenLanguages,
+    sameAs: [profile.links.linkedin, profile.links.github],
+  },
+};
+---
+
+<Base
+  title={profile.seo.title}
+  description={profile.seo.description}
+  og="/og/home.png"
+  ogAlt={`${profile.name}: ${profile.positioning}`}
+  home
+  jsonLd={jsonLd}
+>
+  <div class="wrap">
+    <section class="hero" id="home" aria-labelledby="name">
+      <div>
+        <h1 id="name">{profile.name.split(' ').map((part) => <span>{part}</span>)}</h1>
+        <p class="pos">{profile.positioning}</p>
+        <p class="lede">{profile.lede}</p>
+        <p class="avail"><span class="live" aria-hidden="true"></span>{avail}</p>
+        <p class="facts">{degree}<br />{where}</p>
+        <div class="actions">
+          <span class="seg">
+            <a class="btn primary" href={profile.links.cvEn} aria-label="CV in English (PDF)"><Icon name="down" />CV <span class="sub">EN</span></a>
+            <a class="btn" href={profile.links.cvFr} aria-label="CV in French (PDF)" hreflang="fr">FR</a>
+          </span>
+          <button class="btn" type="button" data-copy-email data-js><Icon name="copy" />Copy email</button>
+          <QuietLinks links={socials} />
+        </div>
+      </div>
+      <figure class="portrait-wrap">
+        <Picture
+          class="portrait"
+          src={portrait}
+          formats={['avif']}
+          fallbackFormat="webp"
+          widths={[240, 360, 528]}
+          sizes="(max-width: 40rem) 7.5rem, 16.5rem"
+          alt={`Portrait of ${profile.name}`}
+          loading="eager"
+          fetchpriority="high"
+        />
+        <svg class="seal" viewBox="0 0 120 120" aria-hidden="true">
+          <defs><path id="seal-ring" d="M60 60m-43 0a43 43 0 1 1 86 0a43 43 0 1 1-86 0"></path></defs>
+          <circle class="seal-bg" cx="60" cy="60" r="58"></circle>
+          <g class="seal-spin"><text><textPath href="#seal-ring" textLength="268" lengthAdjust="spacing">OPEN TO WORK · ML · APPLIED AI · SOFTWARE ·</textPath></text></g>
+          <circle class="seal-dot" cx="60" cy="60" r="7"></circle>
+        </svg>
+      </figure>
+    </section>
+
+    <section id="work" aria-labelledby="work-h">
+      <div class="head"><h2 id="work-h">Selected work</h2><p>{featured.length} case studies</p></div>
+      <ul class="cards">
+        {
+          featured.map((w) => (
+            <li class="card" data-slug={w.id}>
+              <div class="card-top">
+                <Glyph slug={w.id} />
+                <Icon name="ne" class="arr" />
+              </div>
+              <h3 class="ttl"><a class="stretch" href={`/work/${w.id}`}>{w.data.cardTitle}</a></h3>
+              <div class="org-line">{shortContext(w.data.context)}</div>
+              <p class="desc">{w.data.summary}</p>
+              <div class="fig"><b>{w.data.metric.value}</b><span>{w.data.metric.label}</span></div>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section id="experience" aria-labelledby="exp-h">
+      <div class="head"><h2 id="exp-h">Experience</h2></div>
+      {
+        [jobsMain, jobsMore].map((jobs, i) => {
+          const list = (
+            <ul class="list">
+              {jobs.map((e) => (
+                <li class="item">
+                  <div class="line">
+                    <h3 class="ttl">{e.data.role}</h3>
+                    <span class="when">{span(e.data.start, e.data.end)}</span>
+                  </div>
+                  <div class="org-line">
+                    {[e.data.org + (e.data.orgNote ? ` (${e.data.orgNote})` : ''), e.data.employment, e.data.context].filter(Boolean).join(' · ')}
+                  </div>
+                  <p class="desc">{e.data.summary}</p>
+                  <QuietLinks links={e.data.caseStudies.map((c) => ({ label: `Case study: ${workTitles[c.id]}`, href: `/work/${c.id}`, icon: 'arrow' as const }))} />
+                </li>
+              ))}
+            </ul>
+          );
+          return i === 0 ? list : jobs.length > 0 && <div class="more" id="more-jobs" data-collapsed><div>{list}</div></div>;
+        })
+      }
+      {
+        jobsMore.length > 0 && (
+          <button class="toggle-more" type="button" aria-expanded="false" aria-controls="more-jobs" data-label={`Show ${jobsMore.length} earlier roles`} data-js>
+            <span>Show {jobsMore.length} earlier roles</span>
+            <Icon name="chev" />
+          </button>
+        )
+      }
+
+      <h3 class="sub-head">Education</h3>
+      <ul class="list">
+        {
+          profile.education.map((e) => (
+            <li class="item">
+              <div class="line">
+                <h4 class="ttl">{e.degree}</h4>
+                <span class="when">{span(e.start, e.end)}</span>
+              </div>
+              <div class="org-line">{e.school}</div>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="note">Coursework: {profile.coursework.join(', ')}.</p>
+
+      <h3 class="sub-head" id="skills">Skills</h3>
+      <dl class="skills">
+        {profile.skills.map((g) => <div><dt>{g.group}</dt><dd>{g.items.join(', ')}</dd></div>)}
+      </dl>
+      <p class="note">Languages: {profile.spokenLanguages.join(', ')}.</p>
+    </section>
+
+    <section id="research" aria-labelledby="res-h">
+      <div class="head"><h2 id="res-h">Research &amp; papers</h2><p><a href="/research">Abstracts and figures</a></p></div>
+      <ol class="list">
+        {
+          papers.map((p) => (
+            <li class="item">
+              <div class="line">
+                <h3 class="ttl"><a class="stretch" href={`/research#${p.id}`}>{p.data.title}</a></h3>
+                <span class="when">{p.data.dateLabel ?? monthLabel(p.data.date)}</span>
+              </div>
+              <p class="desc">{p.data.summary}</p>
+              <QuietLinks links={paperLinks(p.data.links)} />
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section id="projects" aria-labelledby="proj-h">
+      <div class="head"><h2 id="proj-h">Projects</h2><p id="project-count" aria-live="polite">{rows.length} shown</p></div>
+      <div class="filters" role="group" aria-label="Filter projects" data-js>
+        <span class="pill" aria-hidden="true"></span>
+        {filters.map((f) => <button type="button" data-filter={f} aria-pressed={f === 'All' ? 'true' : 'false'}>{f}</button>)}
+      </div>
+      <ul class="list" id="project-list">
+        {
+          rows.map((r) => (
+            <li class="item" data-tags={r.tags.join(' ')}>
+              <div class="line">
+                <h3 class="ttl">{r.href ? <a class="stretch" href={r.href}>{r.title}</a> : r.title}</h3>
+                <span class="when">{r.when}</span>
+              </div>
+              {r.sub && <div class="org-line">{r.sub}</div>}
+              <p class="desc">{r.summary}</p>
+              <QuietLinks links={r.links} />
+            </li>
+          ))
+        }
+      </ul>
+      <details class="archive">
+        <summary><Icon name="right" />Earlier hackathons</summary>
+        <ul class="list">
+          {
+            archive.map((p) => (
+              <li class="item">
+                <div class="line">
+                  <h3 class="ttl">{p.data.title}</h3>
+                  <span class="when">{monthLabel(p.data.date)}</span>
+                </div>
+                {p.data.context && <div class="org-line">{p.data.context}</div>}
+                <p class="desc">{p.data.summary}</p>
+                <QuietLinks links={p.data.links} />
+              </li>
+            ))
+          }
+        </ul>
+      </details>
+    </section>
+
+    <section id="contact" aria-labelledby="contact-h">
+      <div class="contact-card">
+        <h2 id="contact-h">Contact</h2>
+        <p>{profile.contactNote}</p>
+        <div class="email">
+          <a class="email-addr" data-email>{humanEmail}</a>
+          <button class="btn primary" type="button" data-copy-email data-js><Icon name="copy" />Copy</button>
+        </div>
+        <QuietLinks links={socials} />
+        <div class="contact-meta">
+          <span><Icon name="pin" /> {profile.location}</span>
+          <span>Last updated {updated}</span>
+        </div>
+      </div>
+    </section>
+  </div>
+</Base>
