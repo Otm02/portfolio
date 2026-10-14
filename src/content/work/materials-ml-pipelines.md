@@ -11,8 +11,8 @@ metric:
   label: pipeline runtime, after parallel S3 fetching and batched API calls
 order: 4
 confidentiality: >-
-  Work under NDA, described at the level of my CV: tech stack and outcomes only.
-  No data, code or architecture details.
+  Work under NDA, described at the level of my CV: tools, scale and outcomes.
+  No data, code or internal details.
 stack: [Azure ML, CGCNN, AWS S3, MongoDB, PostgreSQL, NestJS, React]
 experience: chemia-2026
 ---
@@ -25,7 +25,6 @@ Chemia predicts a range of materials properties with CGCNN (crystal graph convol
 
 - **Scale:** 600K+ materials.
 - **Stack:** crystal structure files in AWS S3, metadata and properties in MongoDB, compute on Azure ML.
-- **Traceability:** every deployed model needs documented test results and data provenance.
 
 ## What I built
 

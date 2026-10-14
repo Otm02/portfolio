@@ -27,7 +27,7 @@ How much energy does a training step of a large video model use, where does it g
 ## Constraints
 
 - **One GPU:** an NVIDIA RTX 5000 Ada with 32 GB, 4 CPU cores and a 4 GB RAM allocation under Slurm.
-- **Two batch sizes.** Only batch sizes 1 and 2 fit (peak GPU memory 17.7 GB → 27.7 GB). I didn't fake a third point with gradient accumulation, because that changes what a step is.
+- **Two batch sizes.** On the 32 GB GPU, only two power-of-two batch sizes fit: 1 and 2 (peak GPU memory 17.7 GB → 27.7 GB). I didn't fake a third point with gradient accumulation, because that changes what a step is.
 - **A fixed matrix.** 3 measurement modes × 2 batch sizes × 3 repetitions = 18 runs of 5 minutes each.
 - **Coarse sensors.** NVML and CodeCarbon sample every 500 ms, too coarse to measure energy for sub-millisecond phases directly.
 
@@ -44,7 +44,7 @@ How much energy does a training step of a large video model use, where does it g
 - **Forward and backward dominate.** At batch size 1: 166 ms forward, 137 ms backward, 139 ms optimizer step, 27 ms EMA update.
 - **Busy but not saturated.** Mean GPU utilization was 87.75% at batch size 1 and 88.49% at batch size 2; about 70% of 500 ms samples were below 95%, while power stayed at 190–200 W.
 - **Batch size 1 → 2:** throughput from 1.922 to 2.737 samples/s (**+42.4%**), GPU energy per 1,000 samples from 0.0256 to 0.0187 kWh (**−26.8%**).
-- An extra 8-run validation sweep reproduced the wall-clock means within 0.24 s and the energy means within 0.0002 kWh.
+- An extra 8-run validation sweep reproduced the CodeCarbon wall-clock means within 0.24 s and the fine-grained GPU-energy means within 0.0002 kWh.
 
 ## What went wrong and how I fixed it
 

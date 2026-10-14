@@ -7,9 +7,8 @@ start: 2023-10
 end: present
 employment: part-time
 summary: >-
-  Build and run the plant's software: a self-learning line-speed advisory, LLM
-  agents in daily use, and the SCADA, SQL Server and Power BI systems behind
-  them.
+  Build a self-learning line-speed advisory and LLM agents the plant uses every
+  day, and maintain its Ignition SCADA, SQL Server and Power BI systems.
 highlights:
   - >-
     Built a self-learning line-speed advisory for the potato processing line on

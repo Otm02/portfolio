@@ -9,6 +9,4 @@ archive: true
 links:
   - label: Devpost
     href: https://devpost.com/software/akademos
-  - label: GitHub
-    href: https://github.com/TheMoutonNoir/Hackathon-CodeJam
 ---

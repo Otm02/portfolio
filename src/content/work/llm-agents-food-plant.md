@@ -3,12 +3,12 @@ title: LLM agents in daily use at a food plant
 cardTitle: LLM agents in production at a food plant
 context: Russet House (food processing) · Software Developer, part-time · Jan 2026 – present
 summary: >-
-  Three LLM agents plant staff use every day: sales reporting over ERP data, a
-  maintenance-document assistant over SharePoint, and a meetings agent over
-  Teams.
+  Five LLM agents plant staff use every day: three for sales reporting over ERP
+  data, a maintenance-document assistant over SharePoint, and a meetings agent
+  over Teams.
 metric:
-  value: 3 agents
-  label: in daily use, built since January 2026
+  value: 5 agents
+  label: in daily use across sales, maintenance and meetings, built since January 2026
 order: 2
 confidentiality: >-
   Internal company system, described in general terms. No names, usage numbers,
@@ -38,7 +38,7 @@ Two everyday questions were slow to answer. Finding the right maintenance docume
 
 ## Results
 
-All three agents are in daily use. I don't publish usage numbers for internal systems.
+All five agents are in daily use. I don't publish usage numbers for internal systems.
 
 ## What went wrong and how I fixed it
 

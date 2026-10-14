@@ -35,20 +35,24 @@ function signalScale() {
 </svg>`;
 }
 
-/** Stacked 30-day windows one day apart, then random vs grouped splits. */
+/** Stacked 30-day windows one day apart, then random vs segment-grouped splits. */
 function overlappingWindows() {
-  const day = 4.2, w = 30 * day, x0 = 150;
+  const day = 4.2, w = 30 * day, x0 = 150, step = 19;
   const bars = [0, 1, 2, 3, 4]
     .map((i) => `<rect class="dg-bar" x="${(x0 + i * day).toFixed(1)}" y="${16 + i * 9}" width="${w}" height="6" rx="3"/>`)
     .join('');
-  // 16 consecutive windows. Random: test windows sit between training windows.
+  // 16 windows. Random: test windows sit between training windows from the same days.
+  // Grouped: two separate measurement segments; every window of a segment goes to one side.
   const random = 'TTtTtTTtTTtTtTTt';
   const grouped = 'TTTTTTTTTT--tttt';
   const row = (pattern, y) =>
     [...pattern]
-      .map((c, i) => (c === '-' ? '' : `<rect class="${c === 't' ? 'dg-test' : 'dg-train'}" x="${x0 + i * 19}" y="${y}" width="15" height="15" rx="3.5"/>`))
+      .map((c, i) => (c === '-' ? '' : `<rect class="${c === 't' ? 'dg-test' : 'dg-train'}" x="${x0 + i * step}" y="${y}" width="15" height="15" rx="3.5"/>`))
       .join('');
-  return `<svg class="dg-svg" viewBox="0 0 470 200" role="img" aria-label="Schematic: five 30-day windows offset by one day overlap almost entirely. In a random split, test windows sit between training windows that share their days. In a segment-grouped split, all training windows come first, then a gap, then the test windows.">
+  const segA = [x0, x0 + 9 * step + 15], segB = [x0 + 12 * step, x0 + 15 * step + 15];
+  const bracket = ([a, b], label) =>
+    `<path class="dg-grid" d="M${a} 170v5H${b}v-5"/><text class="dg-t dg-t-m" x="${(a + b) / 2}" y="190" text-anchor="middle">${label}</text>`;
+  return `<svg class="dg-svg" viewBox="0 0 470 228" role="img" aria-label="Schematic: five 30-day windows offset by one day overlap almost entirely. In a random split, test windows sit between training windows that share their days. In a segment-grouped split, each continuous measurement segment goes entirely to training or entirely to testing.">
   <text class="dg-t" x="0" y="40">30-day windows</text>
   <text class="dg-t dg-t-m" x="0" y="58">1 day apart</text>
   ${bars}
@@ -56,8 +60,10 @@ function overlappingWindows() {
   ${row(random, 110)}
   <text class="dg-t" x="0" y="160">Grouped split</text>
   ${row(grouped, 148)}
-  <rect class="dg-train" x="${x0}" y="182" width="11" height="11" rx="3"/><text class="dg-t dg-t-m" x="${x0 + 17}" y="192">train</text>
-  <rect class="dg-test" x="${x0 + 74}" y="182" width="11" height="11" rx="3"/><text class="dg-t dg-t-m" x="${x0 + 91}" y="192">test</text>
+  ${bracket(segA, 'segment A')}
+  ${bracket(segB, 'segment B')}
+  <rect class="dg-train" x="${x0}" y="208" width="11" height="11" rx="3"/><text class="dg-t dg-t-m" x="${x0 + 17}" y="218">train</text>
+  <rect class="dg-test" x="${x0 + 74}" y="208" width="11" height="11" rx="3"/><text class="dg-t dg-t-m" x="${x0 + 91}" y="218">test</text>
 </svg>`;
 }
 

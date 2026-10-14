@@ -3,8 +3,8 @@ title: Purposeful
 date: 2023-04
 context: McGill, team project
 summary: >-
-  Idea-sharing platform where ideas you follow appear on your feed: Spring
-  backend, Next.js frontend, Gherkin acceptance tests.
+  Full-stack idea-sharing platform built as a team: Spring backend, Next.js
+  frontend, Gherkin acceptance tests.
 stack: [Java, Spring, Gherkin, Next.js]
 tags: [Web]
 links:

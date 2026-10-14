@@ -4,10 +4,11 @@ cardTitle: Slow-leak detection for high-voltage breakers
 context: Hydro-Québec Research Institute (IREQ) · Machine Learning Research Intern · May – Sep 2026
 summary: >-
   A detector for slow SF₆ loss in 145–315 kV circuit breakers, with an
-  evaluation protocol built for overlapping time-series windows.
+  evaluation protocol built for overlapping time-series windows. Not certified
+  for operational use.
 metric:
   value: 0.867 vs 0.733
-  label: sensitivity vs the physical baseline at an equal false-event budget, on synthetic leaks
+  label: sensitivity vs the physical baseline on synthetic leaks, at an equal false-event budget; the gain is conditional
 order: 1
 confidentiality: >-
   Industrial research project. No code, data or report figures appear here;
@@ -34,7 +35,7 @@ The difficulty is scale. Pressure moves about 40 mbar per °C, while a 1%/year l
 
 An evaluation protocol designed for overlapping windows, and a detector selected under it:
 
-- **Segment-grouped splits:** no test window shares days with a training window.
+- **Segment-grouped splits:** windows are grouped by continuous measurement segment, so no test window shares days with a training window.
 - **An invariance screen** keeping 34 of 93 features stable across healthy time blocks.
 - **Thresholds from healthy data only,** with exact Poisson upper bounds and a multiplicity correction.
 - **A 7-day persistence rule** before an alarm is confirmed.
@@ -42,7 +43,7 @@ An evaluation protocol designed for overlapping windows, and a detector selected
 
 I compared an L1-regularized logistic regression (scikit-learn) with the physical baseline, temperature-slice methods and a temporal convolutional network (PyTorch), over multiple seeds on a cluster scheduler. The selected model was delivered as a frozen, integrity-checked package with reproducible configurations.
 
-<!-- diagram: overlapping-windows | Consecutive 30-day windows share 29 days. A random split leaks neighbours across train and test; a segment-grouped split does not. -->
+<!-- diagram: overlapping-windows | Consecutive 30-day windows share 29 days. A random split puts near-copies on both sides; grouping by continuous measurement segment keeps each segment's windows on one side. -->
 
 <!-- diagram: detector-pipeline | The selected detector, from features to a dispatch. Every threshold comes from healthy data only. -->
 
@@ -57,9 +58,9 @@ The model is not certified for operational use.
 
 ## What went wrong and how I fixed it
 
-- **Features that recognized the device, not the leak.** 44 of 93 features shifted by more than one standard deviation between two healthy devices. The invariance screen removes them.
+- **Features that recognized the device, not the leak.** 44 of 93 features shifted by more than one standard deviation between two healthy devices. I excluded device-identity features, and the invariance screen keeps only features that stay stable across healthy time blocks.
 - **A sequence model that looked blind.** At a frozen threshold, the TCN seemed to miss the leaking device; a threshold sweep showed it confirmed all 4 segments at the common budget. That was a calibration problem, not a transfer problem, so I compare models at an equal false-event budget.
-- **Too much capacity.** The TCN had 224,642 parameters for 1,477 training sequences and lost 0.063 AUC from simulation to field, while the physically informed methods improved. I selected the regularized linear model.
+- **Too much capacity.** The TCN had 224,642 parameters for 1,477 training sequences and lost 0.063 AUC from simulation to field. I selected the regularized linear model.
 
 ## What I'd do next
 

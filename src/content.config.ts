@@ -34,7 +34,7 @@ const profile = defineCollection({
       cvFr: href,
     }),
     lastUpdated: z.coerce.date(),
-    contactNote: z.string(),
+    contactNote: z.string().optional(),
     education: z.array(
       z.object({
         degree: z.string(),

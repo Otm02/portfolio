@@ -257,7 +257,7 @@ const jsonLd = {
     <section id="contact" aria-labelledby="contact-h">
       <div class="contact-card">
         <h2 id="contact-h">Contact</h2>
-        <p>{profile.contactNote}</p>
+        {profile.contactNote && <p>{profile.contactNote}</p>}
         <div class="email">
           <a class="email-addr" data-email>{humanEmail}</a>
           <button class="btn primary" type="button" data-copy-email data-js><Icon name="copy" />Copy</button>

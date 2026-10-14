@@ -9,6 +9,4 @@ archive: true
 links:
   - label: Devpost
     href: https://devpost.com/software/higher-higher-an-addictive-learning-experience
-  - label: GitHub
-    href: https://github.com/TheMoutonNoir/Hack22
 ---

@@ -6,8 +6,8 @@ keyResult: >-
   GPU-centric but not GPU-saturating. Batch size 1 → 2 gives +42.4% throughput
   and −26.8% GPU energy per 1,000 samples.
 contribution: >-
-  Sole author: designed the 18-run measurement matrix, built the
-  CUDA-synchronized phase profiler and 500 ms telemetry, and ran the analysis.
+  Sole author: ran the course's 18-run measurement matrix, built the
+  CUDA-synchronized phase profiler and 500 ms telemetry, and did the analysis.
 links:
   pdf: /papers/vjepa2-energy.pdf
   code: https://github.com/Otm02/vjepa2-energy-char

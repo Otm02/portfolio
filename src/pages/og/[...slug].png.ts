@@ -95,7 +95,7 @@ export const GET: APIRoute = async ({ props }) => {
       h('div', { flexDirection: 'column', padding: '84px 80px 64px', width: 1200, height: 630 }, [
         h('div', { fontSize: 26, color: C.red, fontWeight: 600 }, `${props.count} papers and reports`),
         h('div', { fontSize: 92, fontWeight: 800, letterSpacing: -4, color: C.ink, marginTop: 20, lineHeight: 1 }, 'Research & papers'),
-        h('div', { fontSize: 32, color: C.muted, marginTop: 28, lineHeight: 1.35, maxWidth: 900 }, 'Abstracts, figures and what I did on each: segmentation, self-play RL, GPU energy, stance detection.'),
+        h('div', { fontSize: 32, color: C.muted, marginTop: 28, lineHeight: 1.35, maxWidth: 900 }, 'Abstracts, my part in each, PDFs and code: segmentation, self-play RL, GPU energy, stance detection.'),
         footer(profile.name, portrait),
       ]),
     ]);
