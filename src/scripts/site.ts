@@ -48,17 +48,21 @@ if (spyLinks.length) {
   $$('main section[id]').forEach((s) => io.observe(s));
 }
 
-/* Theme toggle with a circular reveal from the button */
-const systemDark = () => matchMedia('(prefers-color-scheme: dark)').matches;
-const currentTheme = () => root.dataset.theme || (systemDark() ? 'dark' : 'light');
-const syncThemeButtons = () => $$('.theme').forEach((b) => b.setAttribute('aria-pressed', String(currentTheme() === 'dark')));
-syncThemeButtons();
+/* Theme toggle with a circular reveal from the button. Light unless the visitor chose dark. */
+const currentTheme = () => (root.dataset.theme === 'dark' ? 'dark' : 'light');
+const syncTheme = () => {
+  const dark = currentTheme() === 'dark';
+  $$('.theme').forEach((b) => b.setAttribute('aria-pressed', String(dark)));
+  $<HTMLMetaElement>('meta[name="theme-color"]')?.setAttribute('content', dark ? '#111113' : '#FCFCFC');
+};
+syncTheme();
 const toggleTheme = (from?: Element) => {
   const next = currentTheme() === 'dark' ? 'light' : 'dark';
   const apply = () => {
-    root.dataset.theme = next;
+    if (next === 'dark') root.dataset.theme = next;
+    else delete root.dataset.theme;
     try { localStorage.setItem('theme', next); } catch { /* private mode */ }
-    syncThemeButtons();
+    syncTheme();
   };
   if (reduce || !document.startViewTransition || !from) return apply();
   const r = from.getBoundingClientRect();

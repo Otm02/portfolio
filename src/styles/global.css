@@ -44,7 +44,6 @@ kbd { font-family: var(--mono); font-size: 0.75rem; padding: 0.05rem 0.35rem; bo
 .theme .moon { display: none; }
 :root[data-theme="dark"] .theme .sun { display: none; }
 :root[data-theme="dark"] .theme .moon { display: block; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .theme .sun { display: none; } :root:not([data-theme="light"]) .theme .moon { display: block; } }
 .no-js [data-js] { display: none; }
 
 /* ---------- Hero ---------- */
