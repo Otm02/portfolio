@@ -1,4 +1,5 @@
 # Hero, education, skills and contact. Update lastUpdated when you change content.
+# Skill group icons are names from src/lib/icons.ts.
 name: Athmane Benarous
 positioning: I make machine learning hold up on real equipment.
 lede: >-
@@ -40,6 +41,7 @@ coursework:
 
 skills:
   - group: ML
+    icon: neural
     items:
       - PyTorch
       - JAX
@@ -53,6 +55,7 @@ skills:
       - RL (MCTS)
       - LLM agents
   - group: Data and infrastructure
+    icon: database
     items:
       - Azure ML
       - AWS S3
@@ -62,6 +65,7 @@ skills:
       - MongoDB
       - Git
   - group: Software
+    icon: code
     items:
       - Python
       - SQL
@@ -77,6 +81,7 @@ skills:
       - NestJS
       - Spring
   - group: Industrial
+    icon: factory
     items:
       - Ignition SCADA
       - Modbus/OPC

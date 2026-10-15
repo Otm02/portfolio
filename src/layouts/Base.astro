@@ -46,7 +46,7 @@ const beacon = import.meta.env.PROD
         d.classList.remove('no-js');
         try {
           var t = localStorage.getItem('theme');
-          if (t === 'dark' || t === 'light') d.dataset.theme = t;
+          if (t === 'dark') d.dataset.theme = t;
         } catch (e) {}
       })();
     </script>
@@ -54,9 +54,8 @@ const beacon = import.meta.env.PROD
     <meta name="description" content={description} />
     {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
     <meta name="author" content={profile.name} />
-    <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#FCFCFC" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0E0E10" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#FCFCFC" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

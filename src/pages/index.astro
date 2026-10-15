@@ -47,7 +47,7 @@ const rows: ProjectRow[] = [
     })),
 ].sort((a, b) => Number(b.ongoing) - Number(a.ongoing) || b.date.localeCompare(a.date));
 const archive = projects.filter((p) => p.data.archive).sort((a, b) => b.data.date.localeCompare(a.data.date));
-const filters = ['All', ...projectTags];
+const filters = ['All', ...projectTags.filter((t) => rows.some((r) => r.tags.includes(t)))];
 const socials = [
   { label: 'LinkedIn', href: profile.links.linkedin },
   { label: 'GitHub', href: profile.links.github },
@@ -88,7 +88,9 @@ const jsonLd = {
         <p class="pos">{profile.positioning}</p>
         <p class="lede">{profile.lede}</p>
         <p class="avail"><span class="live" aria-hidden="true"></span>{avail}</p>
-        <p class="facts">{degree}<br />{where}</p>
+        <ul class="facts">
+          {[degree, ...where.split(' · ')].map((f) => <li>{f}</li>)}
+        </ul>
         <div class="actions">
           <span class="seg">
             <a class="btn primary" href={profile.links.cvEn}><Icon name="down" />CV <span class="sub">EN</span><span class="sr-only"> (English, PDF)</span></a>
@@ -121,7 +123,7 @@ const jsonLd = {
 
     <section id="work" aria-labelledby="work-h">
       <div class="head"><h2 id="work-h">Selected work</h2><p>{featured.length} case studies</p></div>
-      <ul class="cards">
+      <ul class="cards rail">
         {
           featured.map((w) => (
             <li class="card" data-slug={w.id}>
@@ -141,72 +143,91 @@ const jsonLd = {
 
     <section id="experience" aria-labelledby="exp-h">
       <div class="head"><h2 id="exp-h">Experience</h2></div>
-      {
-        [jobsMain, jobsMore].map((jobs, i) => {
-          const list = (
-            <ul class="list">
-              {jobs.map((e) => (
+      <div class="exp-grid">
+        <div>
+          {
+            [jobsMain, jobsMore].map((jobs, i) => {
+              const list = (
+                <ul class="list">
+                  {jobs.map((e) => (
+                    <li class="item">
+                      <div class="line">
+                        <h3 class="ttl">{e.data.role}</h3>
+                        <span class="when">{span(e.data.start, e.data.end)}</span>
+                      </div>
+                      <div class="org-line">
+                        {[e.data.org + (e.data.orgNote ? ` (${e.data.orgNote})` : ''), e.data.employment, e.data.context].filter(Boolean).join(' · ')}
+                      </div>
+                      <p class="desc">{e.data.summary}</p>
+                      <QuietLinks links={e.data.caseStudies.map((c) => ({ label: `Case study: ${workTitles[c.id]}`, href: `/work/${c.id}`, icon: 'arrow' as const }))} />
+                    </li>
+                  ))}
+                </ul>
+              );
+              return i === 0 ? list : jobs.length > 0 && <div class="more" id="more-jobs" data-collapsed><div>{list}</div></div>;
+            })
+          }
+          {
+            jobsMore.length > 0 && (
+              <button class="toggle-more" type="button" aria-expanded="false" aria-controls="more-jobs" data-label={`Show ${jobsMore.length} earlier roles`} data-js>
+                <span>Show {jobsMore.length} earlier roles</span>
+                <Icon name="chev" />
+              </button>
+            )
+          }
+        </div>
+
+        <div class="exp-side">
+          <h3 class="sub-head">Education</h3>
+          <ul class="list tiles">
+            {
+              profile.education.map((e) => (
                 <li class="item">
                   <div class="line">
-                    <h3 class="ttl">{e.data.role}</h3>
-                    <span class="when">{span(e.data.start, e.data.end)}</span>
+                    <h4 class="ttl">{e.degree}</h4>
+                    <span class="when">{span(e.start, e.end)}</span>
                   </div>
-                  <div class="org-line">
-                    {[e.data.org + (e.data.orgNote ? ` (${e.data.orgNote})` : ''), e.data.employment, e.data.context].filter(Boolean).join(' · ')}
-                  </div>
-                  <p class="desc">{e.data.summary}</p>
-                  <QuietLinks links={e.data.caseStudies.map((c) => ({ label: `Case study: ${workTitles[c.id]}`, href: `/work/${c.id}`, icon: 'arrow' as const }))} />
+                  <div class="org-line">{e.school}</div>
                 </li>
-              ))}
-            </ul>
-          );
-          return i === 0 ? list : jobs.length > 0 && <div class="more" id="more-jobs" data-collapsed><div>{list}</div></div>;
-        })
-      }
-      {
-        jobsMore.length > 0 && (
-          <button class="toggle-more" type="button" aria-expanded="false" aria-controls="more-jobs" data-label={`Show ${jobsMore.length} earlier roles`} data-js>
-            <span>Show {jobsMore.length} earlier roles</span>
-            <Icon name="chev" />
-          </button>
-        )
-      }
-
-      <h3 class="sub-head">Education</h3>
-      <ul class="list">
-        {
-          profile.education.map((e) => (
-            <li class="item">
-              <div class="line">
-                <h4 class="ttl">{e.degree}</h4>
-                <span class="when">{span(e.start, e.end)}</span>
-              </div>
-              <div class="org-line">{e.school}</div>
-            </li>
-          ))
-        }
-      </ul>
-      <p class="note">Coursework: {profile.coursework.join(', ')}.</p>
+              ))
+            }
+          </ul>
+          <details class="note coursework">
+            <summary><Icon name="right" />Relevant coursework ({profile.coursework.length})</summary>
+            <ul class="chips">{profile.coursework.map((c) => <li>{c}</li>)}</ul>
+          </details>
+        </div>
+      </div>
 
       <h3 class="sub-head" id="skills">Skills</h3>
       <dl class="skills">
-        {profile.skills.map((g) => <div><dt>{g.group}</dt><dd>{g.items.join(', ')}</dd></div>)}
+        {
+          [...profile.skills, { group: 'Languages', icon: 'globe' as const, items: profile.spokenLanguages }].map((g, i) => (
+            <div class:list={{ lead: i === 0, langs: i === profile.skills.length }}>
+              <dt><span class="glyph"><Icon name={g.icon} /></span>{g.group}</dt>
+              <dd><ul class="chips">{g.items.map((s) => <li>{s}</li>)}</ul></dd>
+            </div>
+          ))
+        }
       </dl>
-      <p class="note">Languages: {profile.spokenLanguages.join(', ')}.</p>
     </section>
 
     <section id="research" aria-labelledby="res-h">
-      <div class="head"><h2 id="res-h">Research &amp; papers</h2><p><a href="/research">Abstracts and figures</a></p></div>
-      <ol class="list">
+      <div class="head"><h2 id="res-h">Research &amp; papers</h2><p><a href="/research">All abstracts</a></p></div>
+      <ol class="list tiles rail">
         {
           papers.map((p) => (
-            <li class="item">
+            <li class="item link-tile">
+              <Icon name="ne" class="arr" />
               <div class="line">
                 <h3 class="ttl"><a class="stretch" href={`/research#${p.id}`}>{p.data.title}</a></h3>
                 <span class="when">{p.data.dateLabel ?? monthLabel(p.data.date)}</span>
               </div>
               <p class="desc">{p.data.summary}</p>
-              <QuietLinks links={paperLinks(p.data.links)} />
+              <div class="tile-foot">
+                <span class="go" aria-hidden="true">Read abstract<Icon name="arrow" /></span>
+                <QuietLinks links={paperLinks(p.data.links)} />
+              </div>
             </li>
           ))
         }
@@ -219,10 +240,11 @@ const jsonLd = {
         <span class="pill" aria-hidden="true"></span>
         {filters.map((f) => <button type="button" data-filter={f} aria-pressed={f === 'All' ? 'true' : 'false'}>{f}</button>)}
       </div>
-      <ul class="list" id="project-list">
+      <ul class="list tiles rail" id="project-list">
         {
           rows.map((r) => (
-            <li class="item" data-tags={r.tags.join(' ')} data-kind={r.sub === 'Research' ? 'paper' : undefined}>
+            <li class:list={['item', { 'link-tile': r.href }]} data-tags={r.tags.join(' ')} data-kind={r.sub === 'Research' ? 'paper' : undefined}>
+              {r.href && <Icon name="ne" class="arr" />}
               <div class="line">
                 <h3 class="ttl">{r.href ? <a class="stretch" href={r.href}>{r.title}</a> : r.title}</h3>
                 <span class="when">{r.when}</span>
@@ -236,7 +258,7 @@ const jsonLd = {
       </ul>
       <details class="archive">
         <summary><Icon name="right" />Earlier hackathons</summary>
-        <ul class="list">
+        <ul class="list tiles rail">
           {
             archive.map((p) => (
               <li class="item">
