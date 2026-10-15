@@ -1,6 +1,7 @@
 import { defineCollection, reference } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { iconNames } from './lib/icons';
 
 /*
  * Content model. Adding a job, paper, project or case study means adding one
@@ -44,7 +45,7 @@ const profile = defineCollection({
       }),
     ),
     coursework: z.array(z.string()),
-    skills: z.array(z.object({ group: z.string(), items: z.array(z.string()) })),
+    skills: z.array(z.object({ group: z.string(), icon: z.enum(iconNames).default('check'), items: z.array(z.string()) })),
     spokenLanguages: z.array(z.string()),
     seo: z.object({
       title: z.string().max(70),

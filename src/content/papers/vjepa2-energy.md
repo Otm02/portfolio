@@ -22,7 +22,7 @@ figure:
     processes 42% more samples, so energy per 1,000 samples falls 26.8%
     (Fig. 6a of the report).
 tags: [ML, Systems]
-inProjects: true
+inProjects: false
 caseStudy: vjepa2-energy
 ---
 

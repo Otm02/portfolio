@@ -19,7 +19,7 @@ figure:
   caption: >-
     Segmented somas at 9× resolution, outlined in red (Fig. 4a of the paper).
 tags: [ML, Systems]
-inProjects: true
+inProjects: false
 caseStudy: soma-segmentation
 ---
 

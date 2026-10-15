@@ -12,7 +12,7 @@ links:
   pdf: /papers/flood-meta-modeling.pdf
   code: https://github.com/Otm02/flood-meta-modeling
 tags: [ML]
-inProjects: true
+inProjects: false
 ---
 
 A global LSTM flood-forecasting model can be fine-tuned on local data, but fine-tuning is expensive and mostly helps a tail of poorly served basins. We trained a linear-regression meta-model that predicts the fine-tuning gain for a basin from its Caravan attributes (217 features from HydroATLAS and ERA5-Land) across the 159 basins that had been fine-tuned. To avoid spatial leakage we split train and test by region, and with more features than basins we used forward feature selection. The global model's own performance was the first feature selected on every split. Test R² ranged from 0.76 (South America vs. the rest of the world) to −1.37 (UK vs. the rest of the world) and was negative on 3 of 5 splits. With this data, basin attributes are weak predictors of when fine-tuning pays off; a larger set of fine-tuned basins is the main requirement for a useful meta-model.

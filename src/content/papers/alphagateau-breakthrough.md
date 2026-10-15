@@ -23,7 +23,7 @@ figure:
     Training from scratch on 8×8: the CNN overtakes the GNN at iteration 15
     and reaches a 1.00 greedy win rate by iteration 40 (Fig. 2 of the paper).
 tags: [RL, ML]
-inProjects: true
+inProjects: false
 caseStudy: alphagateau-breakthrough
 ---
 
